@@ -1,0 +1,27 @@
+{
+  "name": "@dukes-wine/url-shortner",
+  "version": "1.0.0",
+  "description": "This is a simple server and proxy that helps us route requests fromthe dukes.wine domain to the full website.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dukes-Wine-Co/url-shortner.git"
+  },
+  "keywords": [
+    "proxy",
+    "nginx",
+    "bit.ly"
+  ],
+  "author": "DWC Engineering Team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dukes-Wine-Co/url-shortner/issues"
+  },
+  "homepage": "https://github.com/Dukes-Wine-Co/url-shortner#readme",
+  "dependencies": {
+    "@dukes-wine/eslint-config-dukes-wine": "^1.0.0"
+  }
+}
