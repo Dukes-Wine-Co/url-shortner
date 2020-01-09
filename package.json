@@ -4,6 +4,8 @@
   "description": "This is a simple server and proxy that helps us route requests fromthe dukes.wine domain to the full website.",
   "main": "index.js",
   "scripts": {
+    "dev": "source tools/nginx-module.sh; develop && nodemon index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,6 +24,12 @@
   },
   "homepage": "https://github.com/Dukes-Wine-Co/url-shortner#readme",
   "dependencies": {
-    "@dukes-wine/eslint-config-dukes-wine": "^1.0.0"
+    "@dukes-wine/eslint-config-dukes-wine": "^1.0.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^7.0.0",
+    "nodemon": "^2.0.2"
   }
 }
