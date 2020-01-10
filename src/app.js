@@ -12,16 +12,20 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.use('/', (req, res, next) => {
-    if (isMongoUrl()) {
+    const entryPath = req.path.slice(1);
+    const destinationPath = isMongoUrl(entryPath);
+    if (destinationPath) {
+        res.set('destination-url', destinationPath);
         next();
     } else {
-        console.err('bad route');
-        res.send({success: false})
+        console.err(`bad route: ${entryPath}. redirecting to home page`);
+        res.set('destination-url', '');
     }
 });
 
 app.use('/', (req, res, next) => {
-    res.redirect(gatewayUrl);
+    const forwarUrl = res.get('destination-url');
+    res.redirect(`${gatewayUrl}/${forwarUrl}`);
 });
 
 module.exports = app;

@@ -8,7 +8,7 @@ mongoose.connect(mongoUrl, {
     useUnifiedTopology: true
 }).
 then(() => {
-    console.info('Connection to mongo database established');
+    console.info('Connection to mongo database established 🐍');
 }).
 catch(e => {
     console.error(`There was an error connecting to the mongo database: ${e}`);
