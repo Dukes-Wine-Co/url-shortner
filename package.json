@@ -10,7 +10,7 @@
     "lint:fix": "eslint --fix './index.js' 'src/**/*.js' './**/**/*.js'",
     "pretest": "npm run lint:fix",
     "start": "NODE_ENV=production node index.js",
-    "test": "mocha --recursive --growl=true --timeout 10000 'test/unit/**/*.spec.js'"
+    "test": "mocha --recursive --timeout 10000 'test/unit/**/*.spec.js'"
   },
   "repository": {
     "type": "git",
