@@ -7,8 +7,9 @@
     "dev": "source env.sh; DEBUG=express:* nodemon index.js",
     "lint": "eslint './*.js' './**/*.js' './**/**/*.js' ",
     "lint:fix": "eslint --fix './index.js' 'src/**/*.js' './**/**/*.js'",
+    "pretest": "npm run lint:fix",
     "start": "NODE_ENV=production node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --recursive --growl=true --timeout 10000 'test/unit/**/*.spec.js'"
   },
   "repository": {
     "type": "git",
@@ -32,9 +33,12 @@
     "node-cache": "^5.1.0"
   },
   "devDependencies": {
-    "@dukes-wine/eslint-config-dukes-wine": "^1.1.0",
+    "@dukes-wine/eslint-config-dukes-wine": "^1.2.0",
     "chai": "^4.2.0",
     "mocha": "^7.0.0",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "proxyquire": "^2.1.3",
+    "sinon": "^8.1.0",
+    "sinon-chai": "^3.4.0"
   }
 }
