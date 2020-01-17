@@ -6,11 +6,11 @@ mongoose.set('useCreateIndex', true);
 mongoose.connect(mongoUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true
-}).
-then(() => {
+})
+.then(() => {
     console.info('Connection to mongo database established 🐍');
-}).
-catch(e => {
+})
+.catch(e => {
     console.error(`There was an error connecting to the mongo database: ${e}`);
 });
 
