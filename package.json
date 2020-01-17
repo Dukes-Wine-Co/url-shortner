@@ -4,6 +4,7 @@
   "description": "This is a simple server and proxy that helps us route requests fromthe dukes.wine domain to the full website.",
   "main": "index.js",
   "scripts": {
+    "audit": "npm audit --audit-level=critical --registry=https://registry.npmjs.org\n",
     "dev": "source env.sh; DEBUG=express:* nodemon index.js",
     "lint": "eslint './*.js' './**/*.js' './**/**/*.js' ",
     "lint:fix": "eslint --fix './index.js' 'src/**/*.js' './**/**/*.js'",
@@ -20,7 +21,7 @@
     "bit.ly"
   ],
   "author": "DWC Engineering Team",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Dukes-Wine-Co/url-shortner/issues"
   },
@@ -35,10 +36,16 @@
   "devDependencies": {
     "@dukes-wine/eslint-config-dukes-wine": "^1.2.0",
     "chai": "^4.2.0",
+    "husky": "^4.0.10",
     "mocha": "^7.0.0",
     "nodemon": "^2.0.2",
     "proxyquire": "^2.1.3",
     "sinon": "^8.1.0",
     "sinon-chai": "^3.4.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm audit && npm test"
+    }
   }
 }
