@@ -14,13 +14,14 @@ app.use(bodyParser.json());
 app.use('/', (req, res, next) => {
     const entryPath = req.path.slice(1);
     const destinationPath = isSavedUrl(entryPath);
-    if (destinationPath) {
+    if (destinationPath) 
         res.set('destination-url', destinationPath);
-        next();
-    } else {
-        console.err(`bad route: ${entryPath}. redirecting to home page`);
+     else {
+        console.error(`bad route: ${entryPath}. redirecting to home page`);
         res.set('destination-url', '');
     }
+
+    next();
 });
 
 app.use('/', (req, res, next) => {

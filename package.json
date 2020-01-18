@@ -10,7 +10,8 @@
     "lint:fix": "eslint --fix './index.js' 'src/**/*.js' './**/**/*.js'",
     "pretest": "npm run lint",
     "start": "NODE_ENV=production node index.js",
-    "test": "npm run test:unit",
+    "test": "npm run test:unit && npm run test:integration",
+    "test:integration": "mocha test/integration/**/*.spec.js --timeout 3000",
     "test:unit": "mocha --recursive --timeout 10000 'test/unit/**/*.spec.js'"
   },
   "repository": {
@@ -37,6 +38,7 @@
   "devDependencies": {
     "@dukes-wine/eslint-config-dukes-wine": "^1.2.0",
     "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "husky": "^4.0.10",
     "mocha": "^7.0.0",
     "nodemon": "^2.0.2",
