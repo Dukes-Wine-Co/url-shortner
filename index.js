@@ -5,7 +5,7 @@ const { getAllPairs } = require('./src/helpers/db-transactions');
 const { processUrls } = require('./src/helpers/helper-methods');
 const nodeCache = require('./src/storage');
 
-app.listen(port, () => {
+const startProcess = () => {
     getAllPairs(mongoShortnedUrls)
         .then(urls => {
             nodeCache.write('mongoUrls', processUrls(urls));
@@ -17,5 +17,11 @@ app.listen(port, () => {
         .catch(e => {
             console.log(`There was an error retrieving the urls from the database: ${e}`);
         });
-});
+};
+
+app.listen(port, startProcess);
+
+module.exports = {
+    startProcess
+};
 

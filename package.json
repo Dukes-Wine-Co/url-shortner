@@ -8,9 +8,10 @@
     "dev": "source env.sh; DEBUG=express:* nodemon index.js",
     "lint": "eslint './*.js' './**/*.js' './**/**/*.js' ",
     "lint:fix": "eslint --fix './index.js' 'src/**/*.js' './**/**/*.js'",
-    "pretest": "npm run lint:fix",
+    "pretest": "npm run lint",
     "start": "NODE_ENV=production node index.js",
-    "test": "mocha --recursive --timeout 10000 'test/unit/**/*.spec.js'"
+    "test": "npm run test:unit",
+    "test:unit": "mocha --recursive --timeout 10000 'test/unit/**/*.spec.js'"
   },
   "repository": {
     "type": "git",

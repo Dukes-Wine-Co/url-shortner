@@ -42,6 +42,7 @@ describe('Storage', () => {
             expect(val).to.be.true;
         });
     });
+
     describe('deleteEntry', () => {
         const val = nodeCache.deleteEntry('anything');
         it('calls the del stub', () => {
