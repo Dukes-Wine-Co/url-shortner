@@ -24,6 +24,9 @@ const mongoConnectModule = proxyquire('../../../src/mongo-connect', {
         connect: connectStub,
         Schema: args => Object.assign({ plugin: pluginStub }, args),
         model: modelStub
+    },
+    './helpers/helper-methods': {
+        configureMongoCollectionName: url => url
     }
 });
 

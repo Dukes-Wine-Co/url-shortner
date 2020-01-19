@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const findOrCreate = require('mongoose-findorcreate');
 const { mongoUrl } = require('../config/app-config');
+const { configureMongoCollectionName } = require('./helpers/helper-methods');
 
 mongoose.set('useCreateIndex', true);
 mongoose.connect(mongoUrl, {
@@ -30,5 +31,5 @@ const urlMapSchema = mongoose.Schema({
 urlMapSchema.plugin(findOrCreate);
 
 module.exports = {
-    mongoShortnedUrls: mongoose.model('shortUrl', urlMapSchema)
+    mongoShortnedUrls: mongoose.model(configureMongoCollectionName('shortUrl'), urlMapSchema)
 };

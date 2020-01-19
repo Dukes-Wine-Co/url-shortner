@@ -1,4 +1,5 @@
 const nodeCache = require('../storage');
+const { isProd } = require('./constants');
 
 const isSavedUrl = entryUrlPath => {
     const urlMap = nodeCache.read('mongoUrls');
@@ -14,8 +15,11 @@ const processUrls = arrOfUrls => {
     return urlMap;
 };
 
+const configureMongoCollectionName = name => isProd ? name : `${name}-preProd`;
+
 module.exports = {
     isSavedUrl,
-    processUrls
+    processUrls,
+    configureMongoCollectionName
 };
 

@@ -1,7 +1,9 @@
 const proxyquire = require('proxyquire').noCallThru();
+const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const chai = require('chai');
 const { expect } = chai;
+const rewire = require('rewire');
 chai.use(sinonChai);
 
 const mongoUrls = {
@@ -11,9 +13,7 @@ const mongoUrls = {
 };
 
 const helperMethodModule = proxyquire('../../../../src/helpers/helper-methods', {
-    '../storage': {
-        read: () => mongoUrls
-    }
+    '../storage': { read: () => mongoUrls }
 });
 
 
@@ -41,6 +41,25 @@ describe('Helper Methods', function() {
 
         it('flattens the url array into a simple map', () => {
             expect(processUrls(urlArray)).to.eql(mongoUrls);
+        });
+    });
+
+    describe('configureMongoCollectionName', () => {
+        const helperMethodModule = rewire('../../../../src/helpers/helper-methods');
+        const collectionName = 'mongoUrl';
+
+        it('returns the same collection name when in the prod environment', () => {
+            helperMethodModule.__set__('isProd', true);
+            const prodCollectionName = helperMethodModule
+                .configureMongoCollectionName(collectionName);
+            expect(prodCollectionName).to.eql(collectionName);
+        });
+
+        it('returns the same preProd collection name when not in the prod environment', () => {
+            helperMethodModule.__set__('isProd', false);
+            const prodCollectionName = helperMethodModule
+                .configureMongoCollectionName(collectionName);
+            expect(prodCollectionName).to.eql(`${collectionName}-preProd`);
         });
     });
 });
