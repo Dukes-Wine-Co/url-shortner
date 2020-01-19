@@ -1,5 +1,5 @@
 const nodeCache = require('../storage');
-const { isProd } = require('./constants');
+const { isProd, isTesting } = require('./constants');
 
 const isSavedUrl = entryUrlPath => {
     const urlMap = nodeCache.read('mongoUrls');
@@ -15,11 +15,25 @@ const processUrls = arrOfUrls => {
     return urlMap;
 };
 
-const configureMongoCollectionName = name => isProd ? name : `${name}-preProd`;
+const configureMongoCollectionName = name => {
+    if (isProd) {
+        return name;
+    } else if (isTesting){
+        return `${name}-testing`;
+    } else {
+        return `${name}-preProd`;
+    }
+};
+
+const apiResponse = (resType, msg) => {
+    const targetObj = { response: msg };
+    return Object.assign(targetObj, resType);
+};
 
 module.exports = {
     isSavedUrl,
     processUrls,
-    configureMongoCollectionName
+    configureMongoCollectionName,
+    apiResponse
 };
 

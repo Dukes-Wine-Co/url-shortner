@@ -6,12 +6,16 @@ const addPair = (type, value) => {
         })
         .catch(e => {
             console.error(`There was an error saving the model to the database: ${e.errmsg}`);
+            return e;
         });
 };
 
 const getAllPairs = type => {
     return type.find({})
-        .catch(e => console.error(`There was an error finding the pairs: ${JSON.stringify(e)}`));
+        .catch(e => {
+            console.error(`There was an error finding the pairs: ${JSON.stringify(e)}`);
+            return e;
+        });
 };
 
 module.exports = {

@@ -1,10 +1,10 @@
 {
   "name": "@dukes-wine/url-shortner",
   "version": "1.0.0",
-  "description": "This is a simple server and proxy that helps us route requests fromthe dukes.wine domain to the full website.",
+  "description": "This is a simple server and proxy that helps us route requests from the dukes.wine domain to the full website.",
   "main": "index.js",
   "scripts": {
-    "audit": "npm audit --audit-level=critical --registry=https://registry.npmjs.org\n",
+    "audit": "npm audit --audit-level=high --registry=https://registry.npmjs.org\n",
     "dev": "source env.sh; DEBUG=express:* nodemon index.js",
     "lint": "eslint './*.js' './**/*.js' './**/**/*.js' ",
     "lint:fix": "eslint --fix './index.js' 'src/**/*.js' './**/**/*.js'",
@@ -12,8 +12,8 @@
     "setup": "sh tools/setup.sh",
     "start": "NODE_ENV=production node index.js",
     "test": "npm run test:unit && npm run test:integration",
-    "test:integration": "mocha test/integration/**/*.spec.js --timeout 3000",
-    "test:unit": "mocha --recursive --timeout 10000 'test/unit/**/*.spec.js'"
+    "test:integration": "source env.sh; TESTING=true mocha test/integration/**/*.spec.js --timeout 3000",
+    "test:unit": "TESTING=true mocha --recursive --timeout 10000 'test/unit/**/*.spec.js'"
   },
   "repository": {
     "type": "git",

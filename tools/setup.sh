@@ -1,3 +1,5 @@
+#!/bin/bash
+
 FILE="env.sh"
 
 if [ -f "$FILE" ]; then

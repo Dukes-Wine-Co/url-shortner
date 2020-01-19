@@ -10,13 +10,21 @@ chai.use(sinonChai);
 const useStub = sinon.stub();
 const urlencodedStub = sinon.stub();
 const jsonStub = sinon.stub();
+const savedUrlStub = sinon.stub().returns('about');
 
 const appModule = proxyquire('../../../src/app', {
     'express': () => ({ use: useStub }),
     'body-parser': {
         urlencoded: urlencodedStub,
         json: jsonStub
-    }
+    },
+    './helpers/helper-methods': {
+        isSavedUrl: savedUrlStub
+    },
+    '../config/app-config': {
+        gatewayUrl: 'gateway.url'
+    },
+    './routes/db-routes': 'db-routes'
 });
 
 describe('App Configs', () => {
@@ -31,6 +39,10 @@ describe('App Configs', () => {
 
         it('calls json configuration', () => {
             expect(jsonStub).to.have.been.called;
+        });
+
+        it('loads in the database routes', () => {
+            expect(useStub).to.have.been.calledWith('/db', 'db-routes');
         });
     });
 });
