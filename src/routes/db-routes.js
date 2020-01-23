@@ -4,43 +4,46 @@ const { apiResponse } = require('../helpers/helper-methods');
 const { addPair, getAllPairs } = require('../helpers/db-transactions');
 const { mongoShortnedUrls } = require('../mongo-connect');
 
-const router = express.Router();
 
-router.use('/', (req, res, next) => {
-    if (req.headers.apikey === process.env.DWC_API_KEY)
-        return next();
+module.exports = app => {
+    const router = express.Router();
 
-    const apiMsg = 'You are not authorized to view this route.';
+    app.use('/db', router);
 
-    res.send(apiResponse(constants.failMessage, apiMsg));
-});
+    router.use('/', (req, res, next) => {
+        if (req.headers.apikey === process.env.DWC_API_KEY)
+            return next();
 
-router.post('/add-pair', (req, res) => {
-    const { short, destination } = req.body;
-    const pairToAdd = { short, destination };
+        const apiMsg = 'You are not authorized to view this route.';
 
-    return addPair(mongoShortnedUrls, pairToAdd)
-        .then(() => {
-            res.send(apiResponse(constants.trueMessage, `Added values ${pairToAdd} to the mongo document`));
-        })
-        .catch(e => {
-            res.send(apiResponse(constants.failMessage, e));
-        });
-});
+        res.send(apiResponse(constants.failMessage, apiMsg));
+    });
 
-router.get('/view-pairs', (req, res) => {
-    return getAllPairs(mongoShortnedUrls)
-        .then(urls => {
-            res.send(apiResponse(constants.trueMessage, urls));
-        })
-        .catch(e => {
-            res.send(apiResponse(constants.failMessage, e));
-        });
-});
+    router.post('/add-pair', (req, res) => {
+        const { short, destination } = req.body;
+        const pairToAdd = { short, destination };
 
-router.use('/', (req, res) => {
-    const apiMsg = `This api does not support the endpoint "${req.path}". Please try a supported endpoint`;
-    res.send(apiResponse(constants.failMessage, apiMsg));
-});
+        return addPair(mongoShortnedUrls, pairToAdd)
+            .then(() => {
+                res.send(apiResponse(constants.trueMessage, `Added values ${pairToAdd} to the mongo document`));
+            })
+            .catch(e => {
+                res.send(apiResponse(constants.failMessage, e));
+            });
+    });
 
-module.exports = router;
+    router.get('/view-pairs', (req, res) => {
+        return getAllPairs(mongoShortnedUrls)
+            .then(urls => {
+                res.send(apiResponse(constants.trueMessage, urls));
+            })
+            .catch(e => {
+                res.send(apiResponse(constants.failMessage, e));
+            });
+    });
+
+    router.use('/', (req, res) => {
+        const apiMsg = `This api does not support the endpoint "${req.path}". Please try a supported endpoint`;
+        res.send(apiResponse(constants.failMessage, apiMsg));
+    });
+};

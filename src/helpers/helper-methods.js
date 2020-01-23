@@ -1,5 +1,4 @@
 const nodeCache = require('../storage');
-const { isProd, isTesting } = require('./constants');
 
 const isSavedUrl = entryUrlPath => {
     const urlMap = nodeCache.read('mongoUrls');
@@ -16,12 +15,13 @@ const processUrls = arrOfUrls => {
 };
 
 const configureMongoCollectionName = name => {
-    if (isProd) {
-        return name;
-    } else if (isTesting){
-        return `${name}-testing`;
-    } else {
-        return `${name}-preProd`;
+    switch (process.env.NODE_ENV) {
+        case 'production':
+            return name;
+        case 'test':
+            return `${name}-testing`;
+        default:
+            return `${name}-preProd`;
     }
 };
 

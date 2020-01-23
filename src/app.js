@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
-app.use('/db', dbRoutes);
+dbRoutes(app);
 
 app.use('/', (req, res, next) => {
     const entryPath = req.path.slice(1);
@@ -28,7 +28,7 @@ app.use('/', (req, res, next) => {
     next();
 });
 
-app.use('/', (req, res, next) => {
+app.use('/', (req, res) => {
     const forwarUrl = res.get('destination-url');
     res.redirect(`${gatewayUrl}/${forwarUrl}`);
 });

@@ -12,12 +12,11 @@ const mongoUrls = {
 };
 
 const helperMethodModule = proxyquire('../../../../src/helpers/helper-methods', {
-    '../storage': { read: () => mongoUrls },
-    './constants': { isProd: true }
+    '../storage': { read: () => mongoUrls }
 });
 
 
-describe('Helper Methods', function() {
+describe('Helper Methods', () => {
     describe('isSavedUrl', () => {
         const { isSavedUrl } = helperMethodModule;
 
@@ -53,22 +52,21 @@ describe('Helper Methods', function() {
         });
 
         it('returns the same collection name when in the prod environment', () => {
-            helperMethodModule.__set__('isProd', true);
+            helperMethodModule.__set__('process.env.NODE_ENV', 'production');
             const prodCollectionName = helperMethodModule
                 .configureMongoCollectionName(collectionName);
             expect(prodCollectionName).to.eql(collectionName);
         });
 
         it('returns the testing collection name when in the testing environment', () => {
-            helperMethodModule.__set__('isTesting', true);
+            helperMethodModule.__set__('process.env.NODE_ENV', 'test');
             const prodCollectionName = helperMethodModule
                 .configureMongoCollectionName(collectionName);
             expect(prodCollectionName).to.eql(`${collectionName}-testing`);
         });
 
         it('returns the same preProd collection name when not in the prod environment', () => {
-            helperMethodModule.__set__('isProd', false);
-            helperMethodModule.__set__('isTesting', false);
+            helperMethodModule.__set__('process.env.NODE_ENV', null);
             const prodCollectionName = helperMethodModule
                 .configureMongoCollectionName(collectionName);
             expect(prodCollectionName).to.eql(`${collectionName}-preProd`);

@@ -11,6 +11,7 @@ const useStub = sinon.stub();
 const urlencodedStub = sinon.stub();
 const jsonStub = sinon.stub();
 const savedUrlStub = sinon.stub().returns('about');
+const dbRoutesStub = sinon.stub().returns({});
 
 const appModule = proxyquire('../../../src/app', {
     'express': () => ({ use: useStub }),
@@ -24,7 +25,7 @@ const appModule = proxyquire('../../../src/app', {
     '../config/app-config': {
         gatewayUrl: 'gateway.url'
     },
-    './routes/db-routes': 'db-routes'
+    './routes/db-routes': dbRoutesStub
 });
 
 describe('App Configs', () => {
@@ -42,7 +43,7 @@ describe('App Configs', () => {
         });
 
         it('loads in the database routes', () => {
-            expect(useStub).to.have.been.calledWith('/db', 'db-routes');
+            expect(dbRoutesStub).to.have.been.calledWith(appModule);
         });
     });
 });

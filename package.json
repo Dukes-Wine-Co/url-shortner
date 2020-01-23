@@ -12,8 +12,8 @@
     "setup": "sh tools/setup.sh",
     "start": "NODE_ENV=production node index.js",
     "test": "npm run test:unit && npm run test:integration",
-    "test:integration": "source env.sh; TESTING=true mocha test/integration/**/*.spec.js --timeout 3000",
-    "test:unit": "TESTING=true mocha --recursive --timeout 10000 'test/unit/**/*.spec.js'"
+    "test:integration": "source env.sh; NODE_ENV=test mocha test/integration/**/*.spec.js --timeout 3000",
+    "test:unit": "NODE_ENV=test mocha --recursive --timeout 10000 'test/unit/**/*.spec.js'"
   },
   "repository": {
     "type": "git",
