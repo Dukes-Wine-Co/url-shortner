@@ -22,6 +22,6 @@ module.exports = app => {
 
     router.use('/', (req, res) => {
         const forwarUrl = res.get('destination-url');
-        res.redirect(`${gatewayUrl}/${forwarUrl}`);
+        res.redirect(301, `${gatewayUrl}/${forwarUrl}`);
     });
 };
