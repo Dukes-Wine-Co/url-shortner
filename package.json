@@ -6,8 +6,8 @@
   "scripts": {
     "audit": "npm audit --audit-level=high --registry=https://registry.npmjs.org\n",
     "dev": "source env.sh; DEBUG=express:* nodemon index.js",
-    "jenkins:run": "sh tools/run-jenkins.sh",
-    "jenkins:kill": "sh tools/kill-jenkins.sh",
+    "jenkins:run": "sh tools/jenkins-local.sh run",
+    "jenkins:kill": "sh tools/jenkins-local.sh kill",
     "lint": "eslint './*.js' './**/*.js' './**/**/*.js' ",
     "lint:fix": "eslint --fix './index.js' 'src/**/*.js' './**/**/*.js'",
     "setup": "sh tools/setup.sh",
