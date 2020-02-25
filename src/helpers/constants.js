@@ -1,7 +1,7 @@
 const trueMessage = { success: true };
 const failMessage = { success: false };
-const isProd = process.env.NODE_ENV === 'production';
-const isTesting = process.env.NODE_ENV === 'test';
+const isProd = (envVal = process.env.NODE_ENV) => envVal === 'production';
+const isTesting = (envVal = process.env.NODE_ENV) => envVal === 'test';
 
 module.exports = {
     trueMessage,
