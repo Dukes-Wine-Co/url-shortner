@@ -15,7 +15,7 @@ const startProcess = () => {
             console.info(`Start up complete: Url shortner app listening on port ${port} 🔗`);
         })
         .catch(e => {
-            console.log(`There was an error retrieving the urls from the database: ${e}`);
+            console.error(`There was an error retrieving the urls from the database: ${e}`);
         });
 };
 
