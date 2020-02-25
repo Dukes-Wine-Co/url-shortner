@@ -1,11 +1,9 @@
 const express = require('express');
-const { isSavedUrl } = require('../helpers/helper-methods');
-const { gatewayUrl } = require('../../config/app-config');
+let { isSavedUrl } = require('../helpers/helper-methods');
+let { gatewayUrl } = require('../../config/app-config');
 
 module.exports = app => {
     const router = express.Router();
-
-    console.log(process.env);
 
     app.use('/', router);
 
@@ -14,7 +12,7 @@ module.exports = app => {
         const destinationPath = isSavedUrl(entryPath);
         if (destinationPath)
             res.set('destination-url', destinationPath);
-        else {
+         else {
             console.error(`bad route: ${entryPath}. redirecting to home page`);
             res.set('destination-url', '');
         }
