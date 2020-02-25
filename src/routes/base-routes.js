@@ -5,6 +5,8 @@ const { gatewayUrl } = require('../../config/app-config');
 module.exports = app => {
     const router = express.Router();
 
+    console.log(process.env);
+
     app.use('/', router);
 
     router.use('/', (req, res, next) => {

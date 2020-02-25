@@ -10,10 +10,10 @@
     "jenkins:kill": "sh tools/kill-jenkins.sh",
     "lint": "eslint './*.js' './**/*.js' './**/**/*.js' ",
     "lint:fix": "eslint --fix './index.js' 'src/**/*.js' './**/**/*.js'",
-    "pretest": "npm run lint",
     "setup": "sh tools/setup.sh",
     "start": "NODE_ENV=production node index.js",
     "test": "npm run test:unit",
+    "test:mutation": "stryker run",
     "test:unit": "NODE_ENV=test mocha --recursive --timeout 10000 'test/unit/**/*.spec.js'"
   },
   "repository": {
@@ -39,6 +39,9 @@
   },
   "devDependencies": {
     "@dukes-wine/eslint-config-dukes-wine": "^1.2.0",
+    "@stryker-mutator/core": "^2.5.0",
+    "@stryker-mutator/html-reporter": "^2.5.0",
+    "@stryker-mutator/javascript-mutator": "^2.5.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "husky": "^4.0.10",
@@ -52,7 +55,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm audit && npm test"
+      "pre-push": "npm run lint && npm audit && npm test"
     }
   }
 }
