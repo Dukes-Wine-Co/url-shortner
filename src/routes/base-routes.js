@@ -1,7 +1,7 @@
 const express = require('express');
 let { isSavedUrl } = require('../helpers/helper-methods');
 let { gatewayUrl } = require('../../config/app-config');
-let { logInfo } = require('../../logger');
+let { logInfo, logError } = require('../../config/logger');
 const correlator = require('express-correlation-id');
 
 module.exports = app => {
@@ -19,7 +19,7 @@ module.exports = app => {
         if (destinationPath) {
             res.set('destination-url', destinationPath);
         } else {
-            console.error(`bad route: ${entryPath}. redirecting to home page`);
+            logError(`bad route: ${entryPath}. redirecting to home page`);
             res.set('destination-url', '');
         }
 

@@ -58,12 +58,12 @@ describe('GET /', () => {
     it('calls console error with the expected message when the url is not saved', done => {
         const entryPath = 'some-path';
         isSavedUrlStub.returns(false);
-        const expectedMessage = `bad route: ${entryPath}. redirecting to home page`;
+        const expectedMessage = { message: 'bad route: some-path. redirecting to home page' };
 
         request
             .get(`/${entryPath}`)
             .end(() => {
-                expect(consoleStub).to.have.been.calledWith(expectedMessage);
+                expect(consoleStub).to.have.been.calledWith(JSON.stringify(expectedMessage));
                 done();
             });
     });

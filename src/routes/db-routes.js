@@ -3,7 +3,7 @@ const constants = require('../helpers/constants');
 const { apiResponse } = require('../helpers/helper-methods');
 const { addPair, getAllPairs } = require('../helpers/db-transactions');
 const { mongoShortnedUrls } = require('../mongo-connect');
-const { logInfo, logError } = require('../../logger');
+const { logInfo, logError } = require('../../config/logger');
 
 
 module.exports = app => {
