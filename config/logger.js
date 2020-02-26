@@ -18,7 +18,7 @@ logger.error = error => logger.log({ level: 'error', message: error });
 const logDetails = req => {
     const statusCode = req.res ? req.res.statusCode : '';
     const requestHost = req.headers['request-host'] || '';
-    const originalURL = req.originalUrl || '';
+    const originalPath = req.originalUrl || '';
     const referrer = req.headers.referer || '';
     const userAgent = req.headers['user-agent'] || '';
     const ip = req.headers['x-forwarded-for'] || !!req.connection && req.connection.remoteAddress || '';
@@ -32,7 +32,7 @@ const logDetails = req => {
     return {
         statusCode,
         requestHost,
-        originalURL,
+        originalPath,
         referrer,
         userAgent,
         ip,
@@ -64,7 +64,20 @@ const logInfo = (msg, req) => {
     }
 };
 
+const logRequest = (req, res, next) => {
+    console.log('inside');
+    logger.info(JSON.stringify(logDetails(req)));
+    next();
+};
+
+const logReqError = (err, req, res, next) => {
+    logger.error(JSON.stringify(logDetails(err)));
+    next();
+};
+
 module.exports = {
     logError,
-    logInfo
+    logInfo,
+    logReqError,
+    logRequest
 };

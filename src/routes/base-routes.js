@@ -1,20 +1,22 @@
 const express = require('express');
 let { isSavedUrl } = require('../helpers/helper-methods');
 let { gatewayUrl } = require('../../config/app-config');
-let { logInfo, logError } = require('../../config/logger');
 const correlator = require('express-correlation-id');
+const { logRequest, logReqError, logError } = require('../../config/logger');
+
 
 module.exports = app => {
     const router = express.Router();
 
-    app.use('/', router);
-
     router.use(correlator());
+    router.use(logRequest);
+    router.use(logReqError);
 
+    app.use('/', router);
+    
     router.use('/', (req, res, next) => {
         const entryPath = req.path.slice(1);
 
-        logInfo(`Incoming request for ${entryPath}`, req);
         const destinationPath = isSavedUrl(entryPath);
         if (destinationPath) {
             res.set('destination-url', destinationPath);
@@ -28,8 +30,6 @@ module.exports = app => {
 
     router.use('/', (req, res) => {
         const forwarUrl = res.get('destination-url');
-
-        logInfo(`Outgoing request for /${forwarUrl}`, req);
         res.redirect(301, `${gatewayUrl}/${forwarUrl}`);
     });
 };
