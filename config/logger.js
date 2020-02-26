@@ -1,7 +1,6 @@
 const winston = require('winston');
 
 const format = winston.format.combine(
-    winston.format.timestamp(),
     winston.format.colorize(),
     winston.format.json()
 );
@@ -26,6 +25,7 @@ const logDetails = req => {
     const acceptLanguage = req.headers['accept-language'] || '';
     const domain = req.headers.host || '';
     const correlationId = req.correlationId() || '';
+    const timestamp = Date.now();
 
     const redirectedUrl = !!req.res && !!req.res.getHeaders().location ? req.res.getHeaders().location : '';
 
@@ -39,7 +39,8 @@ const logDetails = req => {
         acceptLanguage,
         domain,
         correlationId,
-        redirectedUrl
+        redirectedUrl,
+        timestamp
     };
 };
 
