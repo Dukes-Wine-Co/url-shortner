@@ -3,6 +3,7 @@ const constants = require('../helpers/constants');
 const { apiResponse } = require('../helpers/helper-methods');
 const { addPair, getAllPairs } = require('../helpers/db-transactions');
 const { mongoShortnedUrls } = require('../mongo-connect');
+const { logInfo, logError } = require('../../logger');
 
 
 module.exports = app => {
@@ -15,6 +16,7 @@ module.exports = app => {
             return next();
 
         const apiMsg = 'You are not authorized to view this route.';
+        logInfo(apiMsg, req);
 
         res.send(apiResponse(constants.failMessage, apiMsg));
     });
@@ -25,9 +27,13 @@ module.exports = app => {
 
         return addPair(mongoShortnedUrls, pairToAdd)
             .then(() => {
-                res.send(apiResponse(constants.trueMessage, `Added values ${pairToAdd} to the mongo document`));
+                const apiMsg = `Added values ${pairToAdd} to the mongo document`;
+
+                logInfo(apiMsg, req);
+                res.send(apiResponse(constants.trueMessage, apiMsg));
             })
             .catch(e => {
+                logError(e, req);
                 res.send(apiResponse(constants.failMessage, e));
             });
     });
@@ -35,15 +41,21 @@ module.exports = app => {
     router.get('/view-pairs', (req, res) => {
         return getAllPairs(mongoShortnedUrls)
             .then(urls => {
+                const apiMsg = 'Returning the mongo urls';
+
+                logInfo(apiMsg, req);
                 res.send(apiResponse(constants.trueMessage, urls));
             })
             .catch(e => {
+                logError(e, req);
                 res.send(apiResponse(constants.failMessage, e));
             });
     });
 
     router.use('/', (req, res) => {
         const apiMsg = `This api does not support the endpoint "${req.path}". Please try a supported endpoint`;
+        logError(apiMsg, req);
+
         res.send(apiResponse(constants.failMessage, apiMsg));
     });
 };
