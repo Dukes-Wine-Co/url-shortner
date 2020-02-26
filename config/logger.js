@@ -1,4 +1,20 @@
-const logger = console;
+const winston = require('winston');
+
+const format = winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.colorize(),
+    winston.format.json()
+);
+
+const logger = winston.createLogger({
+    level: 'info',
+    format,
+    transports: new winston.transports.Console({
+        format: winston.format.simple()
+    })
+});
+
+logger.error = error => logger.log({ level: 'error', message: error });
 
 const logDetails = req => {
     const statusCode = req.res ? req.res.statusCode : '';

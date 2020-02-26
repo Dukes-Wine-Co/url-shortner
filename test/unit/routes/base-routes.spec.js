@@ -27,7 +27,7 @@ describe('GET /', () => {
         route = rewire('../../../src/routes/base-routes');
         route.__set__('isSavedUrl', isSavedUrlStub);
         route.__set__('gatewayUrl', gatewayUrl);
-        route.__set__('console.error', consoleStub);
+        route.__set__('logError', consoleStub);
 
         route(app);
         request = supertest(app);
@@ -58,12 +58,12 @@ describe('GET /', () => {
     it('calls console error with the expected message when the url is not saved', done => {
         const entryPath = 'some-path';
         isSavedUrlStub.returns(false);
-        const expectedMessage = { message: 'bad route: some-path. redirecting to home page' };
+        const expectedMessage = 'bad route: some-path. redirecting to home page';
 
         request
             .get(`/${entryPath}`)
             .end(() => {
-                expect(consoleStub).to.have.been.calledWith(JSON.stringify(expectedMessage));
+                expect(consoleStub).to.have.been.calledWith(expectedMessage);
                 done();
             });
     });
