@@ -46,17 +46,21 @@ const logDetails = req => {
 const logError = (msg, req) => {
     const msgObj = { message: msg };
 
-    if (req) 
+    if (req) {
         logger.error(JSON.stringify(Object.assign(msgObj, logDetails(req))));
-     else logger.error(JSON.stringify(msgObj)); 
+    } else {
+        logger.error(JSON.stringify(msgObj));
+    }
 };
 
 const logInfo = (msg, req) => {
     const msgObj = { message: msg };
 
-    if (req) 
+    if (req) {
         logger.info(JSON.stringify(Object.assign(msgObj, logDetails(req))));
-     else logger.error(JSON.stringify(msgObj)); 
+    } else {
+        logger.error(JSON.stringify(msgObj));
+    }
 };
 
 module.exports = {

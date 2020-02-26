@@ -16,9 +16,9 @@ module.exports = app => {
 
         logInfo(`Incoming request for ${entryPath}`, req);
         const destinationPath = isSavedUrl(entryPath);
-        if (destinationPath)
+        if (destinationPath) {
             res.set('destination-url', destinationPath);
-         else {
+        } else {
             console.error(`bad route: ${entryPath}. redirecting to home page`);
             res.set('destination-url', '');
         }

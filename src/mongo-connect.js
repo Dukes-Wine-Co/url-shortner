@@ -8,12 +8,12 @@ mongoose.connect(mongoUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
-.then(() => {
-    console.info('Connection to mongo database established 🐍');
-})
-.catch(e => {
-    console.error(`There was an error connecting to the mongo database: ${e}`);
-});
+    .then(() => {
+        console.info('Connection to mongo database established 🐍');
+    })
+    .catch(e => {
+        console.error(`There was an error connecting to the mongo database: ${e}`);
+    });
 
 const urlMapSchema = mongoose.Schema({
     short: {

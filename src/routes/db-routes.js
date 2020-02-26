@@ -12,8 +12,9 @@ module.exports = app => {
     app.use('/db', router);
 
     router.use('/', (req, res, next) => {
-        if (req.headers.apikey === process.env.DWC_API_KEY)
+        if (req.headers.apikey === process.env.DWC_API_KEY) {
             return next();
+        }
 
         const apiMsg = 'You are not authorized to view this route.';
         logInfo(apiMsg, req);
