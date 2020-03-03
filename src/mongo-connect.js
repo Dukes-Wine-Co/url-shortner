@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const findOrCreate = require('mongoose-findorcreate');
 const { mongoUrl } = require('../config/app-config');
 const { configureMongoCollectionName } = require('./helpers/helper-methods');
+const { logError, logInfo } = require('../config/logger');
 
 mongoose.set('useCreateIndex', true);
 mongoose.connect(mongoUrl, {
@@ -9,10 +10,10 @@ mongoose.connect(mongoUrl, {
     useUnifiedTopology: true
 })
     .then(() => {
-        console.info('Connection to mongo database established 🐍');
+        logInfo('Connection to mongo database established 🐍');
     })
     .catch(e => {
-        console.error(`There was an error connecting to the mongo database: ${e}`);
+        logError(`There was an error connecting to the mongo database: ${e}`);
     });
 
 const urlMapSchema = mongoose.Schema({

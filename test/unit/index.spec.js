@@ -13,13 +13,17 @@ const appConfig = {
     listen: listenStub
 };
 
-const getPairsStub = sinon.stub().resolves({});
-const processUrlsStub = sinon.stub();
+const getPairsStub = sinon.stub().resolves('some-urls');
+const processUrlsStub = sinon.stub().returns('urls');
 const writeStub = sinon.stub();
+const logInfoStub = sinon.stub();
+const logErrorStub = sinon.stub();
 
 const indexModule = proxyquire('../../index', {
     './src/app': appConfig,
-    './src/mongo-connect': 'some mongo urls',
+    './src/mongo-connect': {
+        mongoShortnedUrls: 'some mongo urls'
+    },
     './src/helpers/db-transactions': {
         getAllPairs: getPairsStub
     },
@@ -28,10 +32,31 @@ const indexModule = proxyquire('../../index', {
     },
     './src/storage': {
         write: writeStub
+    },
+    './config/logger': {
+        logInfo: logInfoStub,
+        logError: logErrorStub
     }
 });
 
 describe('Index Module', () => {
+    describe('startProcess', () => {
+        beforeEach(() => {
+            getPairsStub.resetHistory();
+            writeStub.resetHistory();
+        });
+
+        it('calls getAllPairs with the mongo urls', async() => {
+            await indexModule.startProcess();
+            expect(getPairsStub).to.have.been.calledWith('some mongo urls');
+        });
+
+        it('calls node cache write with the right args', async() => {
+            await indexModule.startProcess();
+            expect(writeStub).to.have.been.calledWith('mongoUrls', 'urls');
+        });
+    });
+
     it('calls app.listen', () => {
         indexModule;
         expect(listenStub).to.have.been.calledWith('3000', indexModule.startProcess);

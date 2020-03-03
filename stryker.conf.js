@@ -13,6 +13,7 @@ module.exports = config => {
         transpilers: [],
         coverageAnalysis: 'all',
         mutate: [
+            'config/**.js',
             'src/**.js',
             'src/**/**.js',
             '*.js',

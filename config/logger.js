@@ -19,7 +19,7 @@ const logDetails = req => {
     const statusCode = req.res ? req.res.statusCode : '';
     const requestHost = req.headers['request-host'] || '';
     const originalPath = req.originalUrl || '';
-    const referrer = req.headers.referer || '';
+    const referer = req.headers.referer || '';
     const userAgent = req.headers['user-agent'] || '';
     const ip = req.headers['x-forwarded-for'] || !!req.connection && req.connection.remoteAddress || '';
     const acceptLanguage = req.headers['accept-language'] || '';
@@ -33,7 +33,7 @@ const logDetails = req => {
         statusCode,
         requestHost,
         originalPath,
-        referrer,
+        referer,
         userAgent,
         ip,
         acceptLanguage,
@@ -78,5 +78,7 @@ module.exports = {
     logError,
     logInfo,
     logReqError,
-    logRequest
+    logRequest,
+    logDetails,
+    logger
 };
