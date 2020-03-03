@@ -24,7 +24,7 @@ const logDetails = req => {
     const ip = req.headers['x-forwarded-for'] || !!req.connection && req.connection.remoteAddress || '';
     const acceptLanguage = req.headers['accept-language'] || '';
     const domain = req.headers.host || '';
-    const correlationId = req.correlationId() || '';
+    const correlationId = req.correlationId && req.correlationId() || '';
     const timestamp = Date.now();
 
     const redirectedUrl = !!req.res && !!req.res.getHeaders().location ? req.res.getHeaders().location : '';
@@ -65,7 +65,6 @@ const logInfo = (msg, req) => {
 };
 
 const logRequest = (req, res, next) => {
-    console.log('inside');
     logger.info(JSON.stringify(logDetails(req)));
     next();
 };

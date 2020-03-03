@@ -1,9 +1,10 @@
 const express = require('express');
-const constants = require('../helpers/constants');
+const { trueMessage, failMessage } = require('../helpers/constants');
 const { apiResponse } = require('../helpers/helper-methods');
 const { addPair, getAllPairs } = require('../helpers/db-transactions');
 const { mongoShortnedUrls } = require('../mongo-connect');
 const { logInfo, logError } = require('../../config/logger');
+const { isValidDBReq } = require('../helpers/request-helpers');
 
 
 module.exports = app => {
@@ -12,14 +13,14 @@ module.exports = app => {
     app.use('/db', router);
 
     router.use('/', (req, res, next) => {
-        if (req.headers.apikey === process.env.DWC_API_KEY) {
+        if (isValidDBReq(req)) {
             return next();
         }
 
         const apiMsg = 'You are not authorized to view this route.';
         logInfo(apiMsg, req);
 
-        res.send(apiResponse(constants.failMessage, apiMsg));
+        res.send(apiResponse(failMessage, apiMsg));
     });
 
     router.post('/add-pair', (req, res) => {
@@ -31,11 +32,11 @@ module.exports = app => {
                 const apiMsg = `Added values ${pairToAdd} to the mongo document`;
 
                 logInfo(apiMsg, req);
-                res.send(apiResponse(constants.trueMessage, apiMsg));
+                res.send(apiResponse(trueMessage, apiMsg));
             })
             .catch(e => {
                 logError(e, req);
-                res.send(apiResponse(constants.failMessage, e));
+                res.send(apiResponse(failMessage, e));
             });
     });
 
@@ -45,11 +46,11 @@ module.exports = app => {
                 const apiMsg = 'Returning the mongo urls';
 
                 logInfo(apiMsg, req);
-                res.send(apiResponse(constants.trueMessage, urls));
+                res.send(apiResponse(trueMessage, urls));
             })
             .catch(e => {
                 logError(e, req);
-                res.send(apiResponse(constants.failMessage, e));
+                res.send(apiResponse(failMessage, e));
             });
     });
 
@@ -57,6 +58,6 @@ module.exports = app => {
         const apiMsg = `This api does not support the endpoint "${req.path}". Please try a supported endpoint`;
         logError(apiMsg, req);
 
-        res.send(apiResponse(constants.failMessage, apiMsg));
+        res.send(apiResponse(failMessage, apiMsg));
     });
 };
