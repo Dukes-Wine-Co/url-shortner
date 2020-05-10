@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 runBabel(){
   babel src -d out
 }

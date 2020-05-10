@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 JENKINS_NAME="jenkins-local"
 
 run(){
