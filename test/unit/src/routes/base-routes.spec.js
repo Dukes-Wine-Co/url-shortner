@@ -24,7 +24,7 @@ describe('GET /', () => {
         app = express();
         isSavedUrlStub = sinon.stub();
         consoleStub = sinon.stub();
-        route = rewire('../../../../src/routes/base-routes');
+        route = rewire('../../../../out/routes/base-routes');
         route.__set__('isSavedUrl', isSavedUrlStub);
         route.__set__('gatewayUrl', gatewayUrl);
         route.__set__('logError', consoleStub);

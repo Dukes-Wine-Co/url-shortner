@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 const findOrCreate = require('mongoose-findorcreate');
-const { mongoUrl } = require('../config/app-config');
+const { mongoUrl } = require('./config/app-config');
 const { configureMongoCollectionName } = require('./helpers/helper-methods');
-const { logError, logInfo } = require('../config/logger');
+const { logError, logInfo } = require('./config/logger');
 
 mongoose.set('useCreateIndex', true);
 mongoose.connect(mongoUrl, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
     .then(() => {
         logInfo('Connection to mongo database established 🐍');
     })

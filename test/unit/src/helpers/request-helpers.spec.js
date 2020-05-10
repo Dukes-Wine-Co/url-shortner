@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const { isValidDBReq } = require('../../../../src/helpers/request-helpers');
+const { isValidDBReq } = require('../../../../out/helpers/request-helpers');
 
 describe('Request Helpers', () => {
     describe('isValidDBReq', () => {

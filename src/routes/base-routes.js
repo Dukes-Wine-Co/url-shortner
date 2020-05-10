@@ -1,8 +1,8 @@
 const express = require('express');
 let { isSavedUrl } = require('../helpers/helper-methods');
-let { gatewayUrl } = require('../../config/app-config');
+let { gatewayUrl } = require('../config/app-config');
 let correlator = require('express-correlation-id');
-let { logRequest, logReqError, logError } = require('../../config/logger');
+let { logRequest, logReqError, logError } = require('../config/logger');
 
 
 module.exports = app => {
@@ -15,7 +15,7 @@ module.exports = app => {
     app.use('/', router);
 
     router.use('/', (req, res, next) => {
-        const entryPath = req.path ? req.path.slice(1) : '';
+        const entryPath = req.path?.slice(1) || '';
 
         const destinationPath = isSavedUrl(entryPath);
         if (destinationPath) {

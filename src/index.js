@@ -1,9 +1,9 @@
 const port = process.env.PORT || '3000';
-const app = require('./src/app');
-const { mongoShortnedUrls } = require('./src/mongo-connect');
-const { getAllPairs } = require('./src/helpers/db-transactions');
-const { processUrls } = require('./src/helpers/helper-methods');
-const nodeCache = require('./src/storage');
+const app = require('./app');
+const { mongoShortnedUrls } = require('./mongo-connect');
+const { getAllPairs } = require('./helpers/db-transactions');
+const { processUrls } = require('./helpers/helper-methods');
+const nodeCache = require('./storage');
 const { logInfo, logError } = require('./config/logger');
 
 const startProcess = () => {

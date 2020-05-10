@@ -25,7 +25,7 @@ describe('GET /db', () => {
         addPairStub = sinon.stub();
         isValidDBReqStub = sinon.stub();
 
-        route = proxyquire('../../../../src/routes/db-routes', {
+        route = proxyquire('../../../../out/routes/db-routes', {
             '../mongo-connect': 'some-mongo-object',
             '../helpers/request-helpers': {
                 isValidDBReq: isValidDBReqStub

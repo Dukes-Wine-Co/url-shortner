@@ -12,7 +12,7 @@ const setStub = sinon.stub().returns(true);
 const delStub = sinon.stub().returns(1);
 
 const nodeCache = proxyquire('../../../src/storage', {
-    '../config/node-cache-config': {
+    './config/node-cache-config': {
         get: getStub,
         set: setStub,
         del: delStub

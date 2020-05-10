@@ -9,13 +9,13 @@ chai.use(sinonChai);
 
 const nodeCacheStub = sinon.stub().returns('node cache obj');
 
-const nodeCacheModule = proxyquire('../../../config/node-cache-config', {
+const nodeCacheModule = proxyquire('../../../../src/config/node-cache-config', {
     'node-cache': nodeCacheStub
 });
 
 describe('Node Cache Config', () => {
     it('configures and exports an internal cache object', () => {
-        nodeCacheModule.internalCache;
+        nodeCacheModule;
         expect(nodeCacheStub).to.have.been.called;
     });
 });

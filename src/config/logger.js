@@ -1,33 +1,27 @@
 const winston = require('winston');
 
 const format = winston.format.combine(
-    winston.format.colorize(),
     winston.format.json()
 );
 
 const logger = winston.createLogger({
-    level: 'info',
+    level: 'verbose',
     format,
-    transports: new winston.transports.Console({
-        format: winston.format.simple()
-    })
+    transports: new winston.transports.Console({})
 });
 
-logger.error = error => logger.log({ level: 'error', message: error });
-
 const logDetails = req => {
-    const statusCode = req.res ? req.res.statusCode : '';
+    const statusCode = req.res?.statusCode || '';
     const requestHost = req.headers['request-host'] || '';
     const originalPath = req.originalUrl || '';
     const referer = req.headers.referer || '';
     const userAgent = req.headers['user-agent'] || '';
-    const ip = req.headers['x-forwarded-for'] || !!req.connection && req.connection.remoteAddress || '';
+    const ip = req.headers['x-forwarded-for'] || req.connection?.remoteAddress || '';
     const acceptLanguage = req.headers['accept-language'] || '';
     const domain = req.headers.host || '';
-    const correlationId = req.correlationId && req.correlationId() || '';
+    const correlationId = req.correlationId?.() || '';
     const timestamp = Date.now();
-
-    const redirectedUrl = !!req.res && !!req.res.getHeaders().location ? req.res.getHeaders().location : '';
+    const redirectedUrl = req.res?.getHeaders?.().location || '';
 
     return {
         statusCode,
@@ -45,32 +39,32 @@ const logDetails = req => {
 };
 
 const logError = (msg, req) => {
-    const msgObj = { message: msg };
+    const msgObj = { log: msg };
 
     if (req) {
-        logger.error(JSON.stringify(Object.assign(msgObj, logDetails(req))));
+        logger.error(Object.assign(msgObj, logDetails(req)));
     } else {
-        logger.error(JSON.stringify(msgObj));
+        logger.error(msgObj);
     }
 };
 
 const logInfo = (msg, req) => {
-    const msgObj = { message: msg };
+    const msgObj = { log: msg };
 
     if (req) {
-        logger.info(JSON.stringify(Object.assign(msgObj, logDetails(req))));
+        logger.info(Object.assign(msgObj, logDetails(req)));
     } else {
-        logger.info(JSON.stringify(msgObj));
+        logger.info(msgObj);
     }
 };
 
 const logRequest = (req, res, next) => {
-    logger.info(JSON.stringify(logDetails(req)));
+    logger.http(logDetails(req));
     next();
 };
 
 const logReqError = (err, req, res, next) => {
-    logger.error(JSON.stringify(logDetails(err)));
+    logger.error(logDetails(err));
     next();
 };
 

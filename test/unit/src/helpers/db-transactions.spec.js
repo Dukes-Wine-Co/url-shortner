@@ -2,7 +2,7 @@ const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const chai = require('chai');
 const { expect } = chai;
-const { addPair, getAllPairs } = require('../../../../src/helpers/db-transactions');
+const { addPair, getAllPairs } = require('../../../../out/helpers/db-transactions');
 chai.use(sinonChai);
 
 const findStub = sinon.stub().resolves('entire mongo document');

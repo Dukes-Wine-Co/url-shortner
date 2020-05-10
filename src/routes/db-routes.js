@@ -3,7 +3,7 @@ const { trueMessage, failMessage } = require('../helpers/constants');
 const { apiResponse } = require('../helpers/helper-methods');
 const { addPair, getAllPairs } = require('../helpers/db-transactions');
 const { mongoShortnedUrls } = require('../mongo-connect');
-const { logInfo, logError } = require('../../config/logger');
+const { logInfo, logError } = require('../config/logger');
 const { isValidDBReq } = require('../helpers/request-helpers');
 
 

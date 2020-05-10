@@ -19,18 +19,18 @@ const writeStub = sinon.stub();
 const logInfoStub = sinon.stub();
 const logErrorStub = sinon.stub();
 
-const indexModule = proxyquire('../../index', {
-    './src/app': appConfig,
-    './src/mongo-connect': {
+const indexModule = proxyquire('../../../src/index', {
+    './app': appConfig,
+    './mongo-connect': {
         mongoShortnedUrls: 'some mongo urls'
     },
-    './src/helpers/db-transactions': {
+    './helpers/db-transactions': {
         getAllPairs: getPairsStub
     },
-    './src/helpers/helper-methods': {
+    './helpers/helper-methods': {
         processUrls: processUrlsStub
     },
-    './src/storage': {
+    './storage': {
         write: writeStub
     },
     './config/logger': {

@@ -1,4 +1,4 @@
-const nodeCache = require('../config/node-cache-config');
+const nodeCache = require('./config/node-cache-config');
 
 const read = key => nodeCache.get(key);
 const write = (key, value) => nodeCache.set(key, value);

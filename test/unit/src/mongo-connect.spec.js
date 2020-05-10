@@ -14,9 +14,9 @@ const connectStub = sinon.stub().resolves(() => 'connection established');
 const pluginStub = sinon.stub();
 const modelStub = sinon.stub().returns('mongo model');
 
-const mongoConnectModule = proxyquire('../../../src/mongo-connect', {
+const mongoConnectModule = proxyquire('../../../out/mongo-connect', {
     'mongoose-findorcreate': findOrCreateString,
-    '../config/app-config': {
+    './config/app-config': {
         mongoUrl
     },
     'mongoose': {

@@ -4,6 +4,7 @@ module.exports = {
         'es6': true
     },
     'extends': "@dukes-wine/eslint-config-dukes-wine",
+    'parser': 'babel-eslint',
     "parserOptions": {
         "sourceType": "module",
         "ecmaVersion": 8,
