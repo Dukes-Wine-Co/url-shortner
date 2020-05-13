@@ -17,18 +17,6 @@ const helperMethodModule = proxyquire('../../../../src/helpers/helper-methods', 
 
 
 describe('Helper Methods', () => {
-    describe('isSavedUrl', () => {
-        const { isSavedUrl } = helperMethodModule;
-
-        it('returns the value when the key is in the url map', () => {
-            expect(isSavedUrl('us')).to.eql('about');
-        });
-
-        it('returns false when the key is not in the map', () => {
-            expect(isSavedUrl('something')).to.be.false;
-        });
-    });
-
     describe('processUrls', () => {
         const urlArray = [
             { short: 'us', destination: 'about' },
@@ -40,36 +28,6 @@ describe('Helper Methods', () => {
 
         it('flattens the url array into a simple map', () => {
             expect(processUrls(urlArray)).to.eql(mongoUrls);
-        });
-    });
-
-    describe('configureMongoCollectionName', () => {
-        let helperMethodModule;
-        const collectionName = 'mongoUrl';
-
-        beforeEach(() => {
-            helperMethodModule = rewire('../../../../src/helpers/helper-methods');
-        });
-
-        it('returns the same collection name when in the prod environment', () => {
-            helperMethodModule.__set__('process.env.NODE_ENV', 'production');
-            const prodCollectionName = helperMethodModule
-                .configureMongoCollectionName(collectionName);
-            expect(prodCollectionName).to.eql(collectionName);
-        });
-
-        it('returns the testing collection name when in the testing environment', () => {
-            helperMethodModule.__set__('process.env.NODE_ENV', 'test');
-            const prodCollectionName = helperMethodModule
-                .configureMongoCollectionName(collectionName);
-            expect(prodCollectionName).to.eql(`${collectionName}-testing`);
-        });
-
-        it('returns the same preProd collection name when not in the prod environment', () => {
-            helperMethodModule.__set__('process.env.NODE_ENV', null);
-            const prodCollectionName = helperMethodModule
-                .configureMongoCollectionName(collectionName);
-            expect(prodCollectionName).to.eql(`${collectionName}-preProd`);
         });
     });
 

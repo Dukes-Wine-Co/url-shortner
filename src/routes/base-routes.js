@@ -1,8 +1,8 @@
 const express = require('express');
-let { isSavedUrl } = require('../helpers/helper-methods');
+let { isSavedUrl } = require('./route-helpers/request-helpers');
 let { gatewayUrl } = require('../config/app-config');
 let correlator = require('express-correlation-id');
-let { logRequest, logReqError, logError } = require('../config/logger');
+let { logRequest, logReqError, logError } = require('../helpers/logger-methods');
 
 
 module.exports = app => {

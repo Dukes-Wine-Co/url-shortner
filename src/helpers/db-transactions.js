@@ -1,4 +1,4 @@
-const { logInfo, logError } = require('../config/logger');
+const { logInfo, logError } = require('./logger-methods');
 
 const addPair = (type, value) => {
     const val = new type(value);

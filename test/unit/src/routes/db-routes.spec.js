@@ -26,12 +26,19 @@ describe('GET /db', () => {
         isValidDBReqStub = sinon.stub();
 
         route = proxyquire('../../../../out/routes/db-routes', {
-            '../mongo-connect': 'some-mongo-object',
-            '../helpers/request-helpers': {
-                isValidDBReq: isValidDBReqStub
+            '../config/mongo-config': {
+                mongoShortnedUrls: 'some-mongo-object'
             },
             '../helpers/db-transactions': {
-                addPair: addPairStub
+                addPair: addPairStub,
+                getAllPairs: sinon.stub()
+            },
+            '../helpers/logger-methods': {
+                logInfo: sinon.stub(),
+                logError: sinon.stub()
+            },
+            './route-helpers/request-helpers': {
+                isValidDBReq: isValidDBReqStub
             }
         });
 

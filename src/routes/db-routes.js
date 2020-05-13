@@ -1,11 +1,10 @@
 const express = require('express');
-const { trueMessage, failMessage } = require('../helpers/constants');
+const { trueMessage, failMessage } = require('../constants');
 const { apiResponse } = require('../helpers/helper-methods');
 const { addPair, getAllPairs } = require('../helpers/db-transactions');
-const { mongoShortnedUrls } = require('../mongo-connect');
-const { logInfo, logError } = require('../config/logger');
-const { isValidDBReq } = require('../helpers/request-helpers');
-
+const { mongoShortnedUrls } = require('../config/mongo-config');
+const { logInfo, logError } = require('../helpers/logger-methods');
+const { isValidDBReq } = require('./route-helpers/request-helpers');
 
 module.exports = app => {
     const router = express.Router();

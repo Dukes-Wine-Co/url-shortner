@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const constantsModule = require('../../../../src/helpers/constants');
+const constantsModule = require('../../../src/constants');
 
 describe('Constants', () => {
     it('sets the true message properly', () => {

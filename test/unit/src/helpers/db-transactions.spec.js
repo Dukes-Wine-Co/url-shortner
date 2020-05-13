@@ -1,15 +1,21 @@
+const proxyquire = require('proxyquire');
 const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const chai = require('chai');
 const { expect } = chai;
-const { addPair, getAllPairs } = require('../../../../out/helpers/db-transactions');
 chai.use(sinonChai);
 
 const findStub = sinon.stub().resolves('entire mongo document');
 const saveStub = sinon.stub().resolves('new pair added');
-sinon.stub(console);
 
 describe('DB Transactions', () => {
+    const { addPair, getAllPairs } = proxyquire('../../../../out/helpers/db-transactions', {
+        './logger-methods': {
+            logInfo: sinon.stub(),
+            logError: sinon.stub()
+        }
+    });
+
     describe('addPair', () => {
         const mongoType = class testClass {
                 constructor() {

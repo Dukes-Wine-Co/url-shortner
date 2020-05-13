@@ -20,8 +20,8 @@ const logInfoStub = sinon.stub();
 const logErrorStub = sinon.stub();
 
 const indexModule = proxyquire('../../../src/index', {
-    './app': appConfig,
-    './mongo-connect': {
+    './routes/app': appConfig,
+    './config/mongo-config': {
         mongoShortnedUrls: 'some mongo urls'
     },
     './helpers/db-transactions': {
@@ -30,10 +30,10 @@ const indexModule = proxyquire('../../../src/index', {
     './helpers/helper-methods': {
         processUrls: processUrlsStub
     },
-    './storage': {
+    './helpers/storage-methods': {
         write: writeStub
     },
-    './config/logger': {
+    './helpers/logger-methods': {
         logInfo: logInfoStub,
         logError: logErrorStub
     }

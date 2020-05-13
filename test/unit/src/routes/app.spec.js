@@ -12,15 +12,17 @@ const urlencodedStub = sinon.stub();
 const jsonStub = sinon.stub();
 const dbRoutesStub = sinon.stub().returns({});
 const baseRoutesStub = sinon.stub().returns({});
+const dependencyGraphRouteStub = sinon.stub().returns({})
 
-const appModule = proxyquire('../../../src/app', {
+const appModule = proxyquire('../../../../src/routes/app', {
     'express': () => ({ use: useStub }),
     'body-parser': {
         urlencoded: urlencodedStub,
         json: jsonStub
     },
-    './routes/db-routes': dbRoutesStub,
-    './routes/base-routes': baseRoutesStub
+    './db-routes': dbRoutesStub,
+    './base-routes': baseRoutesStub,
+    './dependency-graph-route': dependencyGraphRouteStub
 });
 
 describe('App', () => {
@@ -43,6 +45,10 @@ describe('App', () => {
 
         it('loads in the base routes', () => {
             expect(baseRoutesStub).to.have.been.calledWith(appModule);
+        });
+
+        it('loads in the dependency graph routes', () => {
+            expect(dependencyGraphRouteStub).to.have.been.calledWith(appModule);
         });
     });
 });

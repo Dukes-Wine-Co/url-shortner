@@ -10,25 +10,28 @@ const mongoUrl = 'mongo url';
 const findOrCreateString = 'find or create';
 
 const setStub = sinon.stub();
-const connectStub = sinon.stub().resolves(() => 'connection established');
 const pluginStub = sinon.stub();
 const modelStub = sinon.stub().returns('mongo model');
+const mongoConnectStub = sinon.stub();
 
-const mongoConnectModule = proxyquire('../../../out/mongo-connect', {
+const mongooseObj = {
+    set: setStub,
+    Schema: args => Object.assign({ plugin: pluginStub }, args),
+    model: modelStub
+};
+
+const mongoConnectModule = proxyquire('../../../../src/config/mongo-config', {
     'mongoose-findorcreate': findOrCreateString,
-    './config/app-config': {
+    './app-config': {
         mongoUrl
     },
-    'mongoose': {
-        set: setStub,
-        connect: connectStub,
-        Schema: args => Object.assign({ plugin: pluginStub }, args),
-        model: modelStub
-    },
-    './helpers/helper-methods': {
-        configureMongoCollectionName: url => url
+    'mongoose': mongooseObj,
+    '../helpers/mongo-methods': {
+        configureMongoCollectionName: url => url,
+        mongoConnect: mongoConnectStub
     }
 });
+
 
 describe('Mongo Connect', () => {
     it('sets the mongo configuration with the right arguments', () => {
@@ -37,14 +40,9 @@ describe('Mongo Connect', () => {
     });
 
     it('connects to mongo with the proper arguments', () => {
-        const connectionObj = {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        };
+        const expectedArgs = [mongooseObj, mongoUrl];
 
-        const expectedArgs = [mongoUrl, connectionObj];
-
-        expect(connectStub).to.have.been.calledWith(...expectedArgs);
+        expect(mongoConnectStub).to.have.been.calledWith(...expectedArgs);
     });
 
     it('sets the findOrCreate plugin', () => {
