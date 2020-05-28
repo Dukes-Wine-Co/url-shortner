@@ -24,6 +24,7 @@ describe('GET /', () => {
         app = express();
         isSavedUrlStub = sinon.stub();
         consoleStub = sinon.stub();
+
         route = rewire('../../../../out/routes/base-routes');
         route.__set__('isSavedUrl', isSavedUrlStub);
         route.__set__('gatewayUrl', gatewayUrl);
@@ -31,6 +32,17 @@ describe('GET /', () => {
 
         route(app);
         request = supertest(app);
+    });
+
+    it('calls the addHSTSS method as a middleware', done => {
+        request
+            .get('/')
+            .end((err, res) => {
+                expect(res.header['strict-transport-security'])
+                    .to
+                    .eql('max-age=31536000; includeSubDomains; preload')
+                done();
+            });
     });
 
     it('calls the isSavedUrlStub stub', done => {
