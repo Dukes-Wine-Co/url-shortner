@@ -39,11 +39,11 @@ describe('Request Helpers', () => {
 
     describe('isSavedUrl', () => {
         it('returns the value when the key is in the url map', () => {
-            expect(isSavedUrl('us')).to.eql(true);
+            expect(isSavedUrl('/us')).to.eql(true);
         });
 
         it('returns false when the key is not in the map', () => {
-            expect(isSavedUrl(false)).to.be.false;
+            expect(isSavedUrl('/false')).to.be.false;
         });
     });
 

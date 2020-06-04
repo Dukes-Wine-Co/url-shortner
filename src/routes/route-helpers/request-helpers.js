@@ -6,8 +6,9 @@ const REDIRECT_MAP = {
 };
 
 const isSavedUrl = entryUrlPath => {
+    const formattedUrl = entryUrlPath.slice(1);
     const urlMap = nodeCache.read('mongoUrls');
-    return urlMap?.[entryUrlPath] || false;
+    return urlMap?.[formattedUrl] || false;
 };
 
 const isValidDBReq = (
