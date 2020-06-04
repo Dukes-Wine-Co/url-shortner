@@ -14,18 +14,18 @@ describe('GET /', () => {
     let app;
     let route;
     let request;
-    let isSavedUrlStub;
+    let mapRequestStub;
     let setDestinationStub;
 
     const gatewayUrl = 'https://google.com';
 
     beforeEach(() => {
         app = express();
-        isSavedUrlStub = sinon.stub();
+        mapRequestStub = sinon.stub();
         setDestinationStub = sinon.stub();
 
-        route = rewire('../../../../out/routes/base-routes');
-        route.__set__('isSavedUrl', isSavedUrlStub);
+        route = rewire('../../../../out/routes/external-routes');
+        route.__set__('mapRequest', mapRequestStub);
         route.__set__('gatewayUrl', gatewayUrl);
         route.__set__('setRedirectDestination', setDestinationStub);
 
@@ -33,9 +33,9 @@ describe('GET /', () => {
         request = supertest(app);
     });
 
-    it('calls the addHSTSS method as a middleware', done => {
+    it('calls the addHSTS method as a middleware', done => {
         request
-            .get('/')
+            .get('/r')
             .end((err, res) => {
                 expect(res.header['strict-transport-security'])
                     .to
@@ -44,32 +44,32 @@ describe('GET /', () => {
             });
     });
 
-    it('calls the isSavedUrlStub stub', done => {
+    it('calls mapRequest with the first param', done => {
         request
-            .get('/')
+            .get('/r/something')
             .end(() => {
-                expect(isSavedUrlStub).to.have.been.calledWith('/');
+                expect(mapRequestStub).to.have.been.calledWith('something');
                 done();
             });
     });
 
-    it('sets the destination path as whatever the isSavedUrl value is when it exists', done => {
-        const destinationPath = 'something-special';
-        isSavedUrlStub.returns(destinationPath);
+    it('sets the destination path as whatever the mapRequest value is when it exists', done => {
+        const destinationPath = 'destination-path';
+        mapRequestStub.returns(destinationPath);
 
         request
-            .get('/a-good-one')
+            .get('/r/a-good-one')
             .end(() => {
-                expect(setDestinationStub).to.have.been.calledWith(destinationPath);
+                expect(setDestinationStub).to.have.been.called;
                 done();
             });
     });
 
     it('returns a status code of 301', done => {
-        isSavedUrlStub.returns(true);
+        mapRequestStub.returns(true);
 
         request
-            .get('/')
+            .get('/r/a-good-one')
             .end((err, res) => {
                 expect(res.status).to.eql(301);
                 done();

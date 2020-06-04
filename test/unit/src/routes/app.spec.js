@@ -13,6 +13,7 @@ const jsonStub = sinon.stub();
 const dbRoutesStub = sinon.stub().returns({});
 const baseRoutesStub = sinon.stub().returns({});
 const dependencyGraphRouteStub = sinon.stub().returns({})
+const externalRedirectRoutesStub = sinon.stub().returns({})
 
 const appModule = proxyquire('../../../../src/routes/app', {
     'express': () => ({ use: useStub }),
@@ -22,7 +23,8 @@ const appModule = proxyquire('../../../../src/routes/app', {
     },
     './db-routes': dbRoutesStub,
     './base-routes': baseRoutesStub,
-    './dependency-graph-route': dependencyGraphRouteStub
+    './dependency-graph-route': dependencyGraphRouteStub,
+    './external-routes': externalRedirectRoutesStub
 });
 
 describe('App', () => {
@@ -49,6 +51,10 @@ describe('App', () => {
 
         it('loads in the dependency graph routes', () => {
             expect(dependencyGraphRouteStub).to.have.been.calledWith(appModule);
+        });
+
+        it('loads in the external redirect routes', () => {
+            expect(externalRedirectRoutesStub).to.have.been.calledWith(appModule);
         });
     });
 });

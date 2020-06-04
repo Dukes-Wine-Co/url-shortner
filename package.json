@@ -6,15 +6,15 @@
   "scripts": {
     "audit": "npm audit --audit-level=high --registry=https://registry.npmjs.org",
     "build": "sh tools/scripts.sh runBabel",
-    "dev": "DEBUG=express:* node out/index.js",
+    "dev": "source env.sh; DEBUG=express:* node out/index.js",
     "jenkins:run": "sh tools/jenkins-local.sh run",
     "jenkins:kill": "sh tools/jenkins-local.sh kill",
     "lint": "eslint './src/*.js' './src/**/*.js' ",
     "lint:fix": "eslint --fix 'src/**/*.js' './src/**/*.js'",
-    "predev": "source env.sh && sh tools/scripts.sh runBabel;",
+    "predev": "npm run build",
     "setup": "sh tools/setup.sh",
     "start": "NODE_ENV=production node out/index.js",
-    "pretest": "sh tools/scripts.sh runBabel",
+    "pretest": "npm run build",
     "test": "npm run test:unit",
     "test:mutation": "stryker run",
     "test:unit": "NODE_ENV=test mocha --recursive --timeout 10000 'test/unit/**/*.spec.js'"

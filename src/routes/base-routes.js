@@ -1,10 +1,9 @@
 const express = require('express');
-let { isSavedUrl } = require('./route-helpers/request-helpers');
 let { addHSTS } = require('./route-helpers/request-middleware');
 let { gatewayUrl } = require('../config/app-config');
 let correlator = require('express-correlation-id');
-let { logRequest, logReqError, logError } = require('../helpers/logger-methods');
-
+let { logRequest, logReqError } = require('../helpers/logger-methods');
+let { setRedirectDestination, isSavedUrl } = require('./route-helpers/request-helpers');
 
 module.exports = app => {
     const router = express.Router();
@@ -17,16 +16,8 @@ module.exports = app => {
     app.use('/', router);
 
     router.use('/', (req, res, next) => {
-        const entryPath = req.path?.slice(1) || '';
-
-        const destinationPath = isSavedUrl(entryPath);
-        if (destinationPath) {
-            res.set('destination-url', destinationPath);
-        } else {
-            logError(`bad route: ${entryPath}. redirecting to home page`);
-            res.set('destination-url', '');
-        }
-
+        const destinationPath = isSavedUrl(req.path);
+        setRedirectDestination(destinationPath, res, req);
         next();
     });
 

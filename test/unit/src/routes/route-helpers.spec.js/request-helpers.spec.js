@@ -1,8 +1,13 @@
 const proxyquire = require('proxyquire')
-const { expect } = require('chai');
+const chai = require('chai')
+const {expect} = chai;
+const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
+
+chai.use(sinonChai)
 
 const testMethod = file => {
-    if (file){
+    if (file) {
         return {
             us: true
         }
@@ -12,13 +17,24 @@ const testMethod = file => {
 };
 
 describe('Request Helpers', () => {
+    const logErrorStub = sinon.stub();
+
     const {
         isValidDBReq,
-        isSavedUrl
+        isSavedUrl,
+        mapRequest,
+        setRedirectDestination
     } = proxyquire('../../../../../out/routes/route-helpers/request-helpers', {
         '../../helpers/storage-methods': {
             read: testMethod
+        },
+        '../../helpers/logger-methods': {
+            logError: logErrorStub
         }
+    });
+
+    beforeEach(() => {
+        logErrorStub.resetHistory();
     });
 
     describe('isSavedUrl', () => {
@@ -48,6 +64,54 @@ describe('Request Helpers', () => {
             const apiKey = 'the api key';
             const validReqVal = isValidDBReq(sampleReq, apiKey);
             expect(validReqVal).to.be.false;
+        });
+    });
+
+    describe('mapRequest', () => {
+        it('returns false if the key is not in the map', () => {
+            expect(mapRequest('anything', {})).to.be.false
+        });
+
+        it('returns true if the key is in the map', () => {
+            expect(mapRequest('anything', {anything: true})).to.be.true
+        });
+    });
+
+    describe('setRedirectDestination', () => {
+        const setStub = sinon.stub();
+
+        beforeEach(() => {
+            setStub.resetHistory();
+        });
+
+        const testRes = {
+            set: setStub
+        }
+
+        const testReq = {
+            path: 'something'
+        }
+
+        const destUrl = 'https://www.google.com'
+
+        it('calls res.set with the right args when destination url is set', () => {
+            setRedirectDestination(destUrl, testRes, testReq);
+            expect(setStub).to.have.been.calledWith('destination-url', destUrl)
+        });
+
+        it('calls logError with the right args when destination url is not set', () => {
+            const expectedLogArg = {
+                entryPath: testReq.path,
+                log: 'invalid location. redirecting to home page'
+            }
+
+            setRedirectDestination(false, testRes, testReq);
+            expect(logErrorStub).to.have.been.calledWith(expectedLogArg)
+        });
+
+        it('calls res.set with the right args when destination url is not set', () => {
+            setRedirectDestination(false, testRes, testReq);
+            expect(setStub).to.have.been.calledWith('destination-url', '')
         });
     });
 });
