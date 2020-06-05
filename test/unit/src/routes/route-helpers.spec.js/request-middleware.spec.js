@@ -65,10 +65,5 @@ describe('Request Helpers', () => {
             redirectHttps(insecureReqBody, resBody, nextStub, addHSTSStub);
             expect(nextStub).to.have.not.been.called;
         });
-
-        it('calls redirect to the expected url', () => {
-            redirectHttps(insecureReqBody, resBody, nextStub, addHSTSStub);
-            expect(redirectStub).to.have.been.calledWith('https://some-host.url')
-        });
     });
 });

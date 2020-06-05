@@ -6,8 +6,6 @@ const redirectHttps = (req, res, next, addHSTSMethod = addHSTS) => {
     if (req.secure) {
         addHSTSMethod(req, res);
         next();
-    } else {
-        res.redirect(`https://${req.headers.host}${req.url}`);
     }
 };
 
