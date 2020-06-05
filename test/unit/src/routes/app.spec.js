@@ -14,6 +14,7 @@ const dbRoutesStub = sinon.stub().returns({});
 const baseRoutesStub = sinon.stub().returns({});
 const dependencyGraphRouteStub = sinon.stub().returns({})
 const externalRedirectRoutesStub = sinon.stub().returns({})
+const redirectHttpsStub = sinon.stub().returns({})
 
 const appModule = proxyquire('../../../../src/routes/app', {
     'express': () => ({ use: useStub }),
@@ -24,7 +25,10 @@ const appModule = proxyquire('../../../../src/routes/app', {
     './db-routes': dbRoutesStub,
     './base-routes': baseRoutesStub,
     './dependency-graph-route': dependencyGraphRouteStub,
-    './external-routes': externalRedirectRoutesStub
+    './external-routes': externalRedirectRoutesStub,
+    './route-helpers/request-middleware': {
+        redirectHttps: redirectHttpsStub
+    }
 });
 
 describe('App', () => {
@@ -39,6 +43,10 @@ describe('App', () => {
 
         it('calls json configuration', () => {
             expect(jsonStub).to.have.been.called;
+        });
+
+        it('calls the redirectHttps middleware', () => {
+            expect(useStub).to.have.been.calledWith(redirectHttpsStub)
         });
 
         it('loads in the database routes', () => {
