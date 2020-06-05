@@ -7,6 +7,11 @@ const REDIRECT_MAP = {
 
 const isSavedUrl = entryUrlPath => {
     const formattedUrl = entryUrlPath.slice(1);
+
+    if (formattedUrl === '') {
+        return '';
+    }
+
     const urlMap = nodeCache.read('mongoUrls');
     return urlMap?.[formattedUrl] || false;
 };
@@ -23,7 +28,7 @@ const mapRequest = (incoming, redirectMap = REDIRECT_MAP) => {
 const setRedirectDestination = (destinationUrl, res, req) => {
     const entryPath = req.path || '';
 
-    if (destinationUrl) {
+    if (destinationUrl !== false) {
         res.set('destination-url', destinationUrl);
     } else {
         logError({

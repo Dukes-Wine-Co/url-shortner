@@ -42,6 +42,10 @@ describe('Request Helpers', () => {
             expect(isSavedUrl('/us')).to.eql(true);
         });
 
+        it('returns an empty string when the blank route is served', () => {
+            expect(isSavedUrl('/')).to.eql('');
+        });
+
         it('returns false when the key is not in the map', () => {
             expect(isSavedUrl('/false')).to.be.false;
         });
@@ -97,6 +101,11 @@ describe('Request Helpers', () => {
         it('calls res.set with the right args when destination url is set', () => {
             setRedirectDestination(destUrl, testRes, testReq);
             expect(setStub).to.have.been.calledWith('destination-url', destUrl)
+        });
+
+        it('does not call logError when dest url is an empty string', () => {
+            setRedirectDestination('', testRes, testReq);
+            expect(logErrorStub).to.have.not.been.called;
         });
 
         it('calls logError with the right args when destination url is not set', () => {
