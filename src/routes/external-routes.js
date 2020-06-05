@@ -1,5 +1,4 @@
 const express = require('express');
-const { addHSTS } = require('./route-helpers/request-middleware');
 const { gatewayUrl } = require('../config/app-config');
 const correlator = require('express-correlation-id');
 const { logRequest, logReqError } = require('../helpers/logger-methods');
@@ -11,7 +10,6 @@ module.exports = app => {
     router.use(correlator());
     router.use(logRequest);
     router.use(logReqError);
-    router.use(addHSTS);
 
     app.use('/r', router);
 

@@ -33,17 +33,6 @@ describe('GET /', () => {
         request = supertest(app);
     });
 
-    it('calls the addHSTSS method as a middleware', done => {
-        request
-            .get('/')
-            .end((err, res) => {
-                expect(res.header['strict-transport-security'])
-                    .to
-                    .eql('max-age=31536000; includeSubDomains; preload')
-                done();
-            });
-    });
-
     it('calls the isSavedUrlStub stub', done => {
         request
             .get('/')

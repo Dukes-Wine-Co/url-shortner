@@ -33,17 +33,6 @@ describe('GET /', () => {
         request = supertest(app);
     });
 
-    it('calls the addHSTS method as a middleware', done => {
-        request
-            .get('/r')
-            .end((err, res) => {
-                expect(res.header['strict-transport-security'])
-                    .to
-                    .eql('max-age=31536000; includeSubDomains; preload')
-                done();
-            });
-    });
-
     it('calls mapRequest with the first param', done => {
         request
             .get('/r/something')
