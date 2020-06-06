@@ -2,7 +2,6 @@ const logger = require('../config/logger');
 
 const logDetails = req => {
     const statusCode = req.res?.statusCode || '';
-    const requestHost = req.headers['request-host'] || '';
     const originalPath = req.originalUrl || '';
     const referer = req.headers.referer || '';
     const userAgent = req.headers['user-agent'] || '';
@@ -15,7 +14,6 @@ const logDetails = req => {
 
     return {
         statusCode,
-        requestHost,
         originalPath,
         referer,
         userAgent,

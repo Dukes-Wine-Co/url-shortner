@@ -66,7 +66,6 @@ describe('Logger', () => {
             const details = logDetails(sampleReq);
             const expectedKeys = [
                 'statusCode',
-                'requestHost',
                 'originalPath',
                 'referer',
                 'userAgent',
