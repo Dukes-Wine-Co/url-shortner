@@ -4,3 +4,4 @@ env.sh
 reports/
 out/
 coverage/
+.stryker-tmp/

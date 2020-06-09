@@ -24,7 +24,7 @@ describe('GET /', () => {
         isSavedUrlStub = sinon.stub();
         setDestinationStub = sinon.stub();
 
-        route = rewire('../../../../out/routes/base-routes');
+        route = rewire('../../../../src/routes/base-routes');
         route.__set__('isSavedUrl', isSavedUrlStub);
         route.__set__('gatewayUrl', gatewayUrl);
         route.__set__('setRedirectDestination', setDestinationStub);

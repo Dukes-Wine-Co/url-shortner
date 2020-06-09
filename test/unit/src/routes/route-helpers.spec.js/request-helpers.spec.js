@@ -24,7 +24,7 @@ describe('Request Helpers', () => {
         isSavedUrl,
         mapRequest,
         setRedirectDestination
-    } = proxyquire('../../../../../out/routes/route-helpers/request-helpers', {
+    } = proxyquire('../../../../../src/routes/route-helpers/request-helpers', {
         '../../helpers/storage-methods': {
             read: testMethod
         },

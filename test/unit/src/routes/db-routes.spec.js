@@ -25,7 +25,7 @@ describe('GET /db', () => {
         addPairStub = sinon.stub();
         isValidDBReqStub = sinon.stub();
 
-        route = proxyquire('../../../../out/routes/db-routes', {
+        route = proxyquire('../../../../src/routes/db-routes', {
             '../config/mongo-config': {
                 mongoShortnedUrls: 'some-mongo-object'
             },

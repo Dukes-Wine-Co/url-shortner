@@ -9,7 +9,7 @@ const findStub = sinon.stub().resolves('entire mongo document');
 const saveStub = sinon.stub().resolves('new pair added');
 
 describe('DB Transactions', () => {
-    const { addPair, getAllPairs } = proxyquire('../../../../out/helpers/db-transactions', {
+    const { addPair, getAllPairs } = proxyquire('../../../../src/helpers/db-transactions', {
         './logger-methods': {
             logInfo: sinon.stub(),
             logError: sinon.stub()

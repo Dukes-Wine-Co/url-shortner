@@ -3,7 +3,9 @@
 JENKINS_NAME="jenkins-local"
 
 run(){
-  docker container run -d -p 8082:8080 -v dwc:/var/jenkins_home --name $JENKINS_NAME jenkins/jenkins:lts;
+  docker container run -d -p 8082:8080 \
+  -v dwc:/var/jenkins_home \
+  --name $JENKINS_NAME jenkins/jenkins:lts;
 }
 
 kill(){

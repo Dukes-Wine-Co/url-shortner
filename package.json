@@ -1,20 +1,21 @@
 {
   "name": "@dukes-wine/url-shortner",
   "version": "1.0.0",
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
   "description": "This is a simple server and proxy that helps us route requests from the dukes.wine domain to the full website.",
-  "main": "out/index.js",
+  "main": "src/index.js",
   "scripts": {
     "audit": "npm audit --audit-level=high --registry=https://registry.npmjs.org",
-    "build": "sh tools/scripts.sh runBabel",
-    "dev": "source env.sh; DEBUG=express:* node out/index.js",
+    "dev": "source env.sh; DEBUG=express:* node src/index.js ",
     "jenkins:run": "sh tools/jenkins-local.sh run",
     "jenkins:kill": "sh tools/jenkins-local.sh kill",
     "lint": "eslint './src/*.js' './src/**/*.js' ",
     "lint:fix": "eslint --fix 'src/**/*.js' './src/**/*.js'",
-    "predev": "npm run build",
     "setup": "sh tools/setup.sh",
-    "start": "NODE_ENV=production node out/index.js",
-    "pretest": "npm run build",
+    "start": "NODE_ENV=production node src/index.js",
     "test": "npm run test:unit",
     "test:mutation": "stryker run",
     "test:unit": "NODE_ENV=test mocha --recursive --timeout 10000 'test/unit/**/*.spec.js'"
@@ -47,11 +48,6 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.0",
-    "@babel/plugin-proposal-optional-chaining": "^7.9.0",
-    "@babel/plugin-transform-runtime": "^7.9.0",
-    "@babel/preset-env": "^7.9.5",
     "@dukes-wine/eslint-config-dukes-wine": "^1.3.1",
     "@stryker-mutator/core": "^2.5.0",
     "@stryker-mutator/html-reporter": "^2.5.0",

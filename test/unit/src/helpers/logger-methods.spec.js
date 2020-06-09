@@ -12,7 +12,7 @@ describe('Logger', () => {
     const infoStub = sinon.stub();
     const httpStub = sinon.stub();
 
-    const loggerModule = proxyquire('../../../../out/helpers/logger-methods', {
+    const loggerModule = proxyquire('../../../../src/helpers/logger-methods', {
         '../config/logger': {
             error: errorStub,
             info: infoStub,

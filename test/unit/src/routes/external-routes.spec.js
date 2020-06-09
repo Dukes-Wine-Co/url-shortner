@@ -24,7 +24,7 @@ describe('GET /', () => {
         mapRequestStub = sinon.stub();
         setDestinationStub = sinon.stub();
 
-        route = rewire('../../../../out/routes/external-routes');
+        route = rewire('../../../../src/routes/external-routes');
         route.__set__('mapRequest', mapRequestStub);
         route.__set__('gatewayUrl', gatewayUrl);
         route.__set__('setRedirectDestination', setDestinationStub);

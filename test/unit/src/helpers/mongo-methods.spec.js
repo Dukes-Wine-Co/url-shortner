@@ -6,7 +6,7 @@ describe('configureMongoCollectionName', () => {
     const collectionName = 'mongoUrl';
 
     beforeEach(() => {
-        helperMethodModule = rewire('../../../../out/helpers/mongo-methods');
+        helperMethodModule = rewire('../../../../src/helpers/mongo-methods');
     });
 
     it('returns the same collection name when in the prod environment', () => {
