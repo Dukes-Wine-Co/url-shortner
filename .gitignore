@@ -5,3 +5,5 @@ reports/
 out/
 coverage/
 .stryker-tmp/
+ngrok/
+nginx/

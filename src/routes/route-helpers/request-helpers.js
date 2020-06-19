@@ -2,7 +2,8 @@ const nodeCache = require('../../helpers/storage-methods');
 const { logError } = require('../../helpers/logger-methods');
 
 const REDIRECT_MAP = {
-    'virtual-tasting-1': process.env.ZOOM_LINK
+    'virtual-tasting-1': process.env.ZOOM_LINK,
+    'juneteenth-2020': 'https://www.dukeswines.com/our-story'
 };
 
 const isSavedUrl = entryUrlPath => {
