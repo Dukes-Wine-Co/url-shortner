@@ -9,11 +9,12 @@
   "main": "src/index.js",
   "scripts": {
     "audit": "npm audit --audit-level=high --registry=https://registry.npmjs.org",
-    "dev": "source env.sh; DEBUG=express:* node src/index.js ",
+    "dev": "source env.sh; DEBUG=express:* nodemon src/index.js ",
     "jenkins:run": "sh tools/jenkins-local.sh run",
     "jenkins:kill": "sh tools/jenkins-local.sh kill",
     "lint": "eslint './src/*.js' './src/**/*.js' ",
     "lint:fix": "eslint --fix 'src/**/*.js' './src/**/*.js'",
+    "predev": "sh scripts/mongo.sh run",
     "setup": "sh tools/setup.sh",
     "start": "NODE_ENV=production node src/index.js",
     "test": "npm run test:unit",

@@ -21,7 +21,9 @@ const isSavedUrl = entryUrlPath => {
 const isValidDBReq = (
     req,
     dwcApiKey = process.env.DWC_API_KEY
-) => req.headers?.apikey === dwcApiKey;
+) => {
+    return req.headers?.apikey === dwcApiKey || req.query?.apikey;
+}
 
 const mapRequest = (incoming, redirectMap = REDIRECT_MAP) => {
     return redirectMap[incoming] || false;

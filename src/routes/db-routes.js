@@ -22,7 +22,7 @@ module.exports = app => {
         res.send(apiResponse(failMessage, apiMsg));
     });
 
-    router.post('/add-pair', (req, res) => {
+    router.post('/add', (req, res) => {
         const { short, destination } = req.body;
         const pairToAdd = { short, destination };
 
@@ -39,7 +39,7 @@ module.exports = app => {
             });
     });
 
-    router.get('/view-pairs', (req, res) => {
+    router.get('/view', (req, res) => {
         return getAllPairs(mongoShortnedUrls)
             .then(urls => {
                 const apiMsg = 'Returning the mongo urls';
