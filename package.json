@@ -8,7 +8,8 @@
   "description": "This is a simple server and proxy that helps us route requests from the dukes.wine domain to the full website.",
   "main": "src/index.js",
   "scripts": {
-    "audit": "npm audit --audit-level=high --registry=https://registry.npmjs.org",
+    "audit": "yarn audit --level high --registry=https://registry.npmjs.org --groups dependencies",
+    "clean": "rm -rf node_modules && yarn cache clean",
     "dev": "source env.sh; DEBUG=express:* nodemon src/index.js ",
     "jenkins:run": "sh tools/jenkins-local.sh run",
     "jenkins:kill": "sh tools/jenkins-local.sh kill",
@@ -67,7 +68,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm run lint && npm audit && npm test"
+      "pre-push": "yarn run lint && yarn run audit && yarn run test"
     }
   }
 }
