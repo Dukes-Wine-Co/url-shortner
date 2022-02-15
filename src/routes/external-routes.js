@@ -2,7 +2,7 @@ const express = require('express');
 const { gatewayUrl } = require('../config/app-config');
 const correlator = require('express-correlation-id');
 const { logRequest, logReqError } = require('../helpers/logger-methods');
-const { setRedirectDestination, mapRequest } = require('./route-helpers/request-helpers');
+const { setRedirectDestination, mapRequest, saveReqInDB } = require('./route-helpers/request-helpers');
 
 module.exports = app => {
     const router = express.Router();
@@ -19,8 +19,9 @@ module.exports = app => {
         next();
     });
 
-    router.use('/', (req, res) => {
+    router.use('/', async(req, res) => {
         const forwardUrl = res.get('destination-url') || gatewayUrl;
         res.redirect(301, forwardUrl);
+        await saveReqInDB(req);
     });
 };

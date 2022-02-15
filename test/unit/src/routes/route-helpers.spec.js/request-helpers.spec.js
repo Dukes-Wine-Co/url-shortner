@@ -52,19 +52,30 @@ describe('Request Helpers', () => {
     });
 
     describe('isValidDBReq', () => {
-        const sampleReq = {
-            headers: {
-                apikey: 'my api key'
+        let sampleReq;
+
+        beforeEach(() => {
+            sampleReq = {
+                headers: {},
+                query: {}
             }
-        };
+        })
 
         it('returns true if the request header apikey matches the dwc apikey', () => {
             const apiKey = 'my api key';
+            sampleReq.headers.apikey = 'my api key';
             const validReqVal = isValidDBReq(sampleReq, apiKey);
             expect(validReqVal).to.be.true;
         });
 
-        it('returns false if the request header apikey does not matche the dwc apikey', () => {
+        it('returns true if the request query apikey matches the dwc apikey', () => {
+            const apiKey = 'my api key';
+            sampleReq.query.apikey = 'my api key';
+            const validReqVal = isValidDBReq(sampleReq, apiKey);
+            expect(validReqVal).to.be.true;
+        });
+
+        it('returns false if the request header apikey does not match the dwc apikey', () => {
             const apiKey = 'the api key';
             const validReqVal = isValidDBReq(sampleReq, apiKey);
             expect(validReqVal).to.be.false;

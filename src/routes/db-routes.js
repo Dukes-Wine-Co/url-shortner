@@ -28,7 +28,7 @@ module.exports = app => {
 
         return addPair(mongoShortnedUrls, pairToAdd)
             .then(() => {
-                const apiMsg = `Added values ${pairToAdd} to the mongo document`;
+                const apiMsg = `Added values ${JSON.stringify(pairToAdd)} to the mongo document`;
 
                 logInfo(apiMsg, req);
                 res.send(apiResponse(trueMessage, apiMsg));

@@ -37,7 +37,7 @@ describe('Logger', () => {
         });
     });
 
-    describe('logDetails', () => {
+    describe('parseRequestDetails', () => {
         let sampleReq;
 
         beforeEach(() => {
@@ -50,7 +50,7 @@ describe('Logger', () => {
                 },
                 headers: {
                     'request-host': 'some-host',
-                    'referer': 'some-referer',
+                    'refrerer': 'some-referer',
                     'user-agent': 'some-agent',
                     'x-forwarded-host': 'some-forwarded-host',
                     'accept-language': 'some-language',
@@ -62,12 +62,12 @@ describe('Logger', () => {
         });
 
         it('returns the expected vals', () => {
-            const { logDetails } = loggerModule;
-            const details = logDetails(sampleReq);
+            const { parseRequestDetails } = loggerModule;
+            const details = parseRequestDetails(sampleReq);
             const expectedKeys = [
                 'statusCode',
                 'originalPath',
-                'referer',
+                'referrer',
                 'userAgent',
                 'ip',
                 'acceptLanguage',

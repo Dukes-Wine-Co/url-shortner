@@ -16,6 +16,7 @@ describe('GET /', () => {
     let request;
     let mapRequestStub;
     let setDestinationStub;
+    let saveReqInDBStub;
 
     const gatewayUrl = 'https://google.com';
 
@@ -23,11 +24,13 @@ describe('GET /', () => {
         app = express();
         mapRequestStub = sinon.stub();
         setDestinationStub = sinon.stub();
+        saveReqInDBStub = sinon.stub();
 
         route = rewire('../../../../src/routes/external-routes');
         route.__set__('mapRequest', mapRequestStub);
         route.__set__('gatewayUrl', gatewayUrl);
         route.__set__('setRedirectDestination', setDestinationStub);
+        route.__set__('saveReqInDB', saveReqInDBStub);
 
         route(app);
         request = supertest(app);
@@ -61,6 +64,15 @@ describe('GET /', () => {
             .get('/r/a-good-one')
             .end((err, res) => {
                 expect(res.status).to.eql(301);
+                done();
+            });
+    });
+
+    it('calls the saveReqInDBStub stub', done => {
+        request
+            .get('/r/something')
+            .end(() => {
+                expect(saveReqInDBStub).to.have.been.called;
                 done();
             });
     });

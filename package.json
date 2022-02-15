@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "engines": {
     "node": ">=14.0.0",
-    "npm": ">=6.0.0"
+    "yarn": ">=1.22.17"
   },
   "description": "This is a simple server and proxy that helps us route requests from the dukes.wine domain to the full website.",
   "main": "src/index.js",
@@ -17,7 +17,7 @@
     "predev": "sh scripts/mongo.sh run",
     "setup": "sh tools/setup.sh",
     "start": "NODE_ENV=production node src/index.js",
-    "test": "npm run test:unit",
+    "test": "yarn run test:unit",
     "test:mutation": "stryker run",
     "test:unit": "NODE_ENV=test mocha --recursive --timeout 10000 'test/unit/**/*.spec.js'"
   },
