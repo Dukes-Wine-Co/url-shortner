@@ -6,9 +6,11 @@ const saveRequest = async request => {
     const requestDetails = parseRequestDetails(request);
     return axiosInstance(`${processingApiUrl}/api/process`, {
         method: 'POST',
-        data: {
-            request: requestDetails,
+        headers: {
             apikey: process.env.DWC_API_KEY
+        },
+        data: {
+            request: requestDetails
         }
     });
 };
