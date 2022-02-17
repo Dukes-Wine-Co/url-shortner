@@ -1,10 +1,16 @@
 const { parseRequestDetails } = require('../../helpers/logger-methods');
-const { savedRequests } = require('../../config/mongo-config');
+const { processingApiUrl } = require('../../config/app-config');
+const axiosInstance = require("../../config/axios-config");
 
 const saveRequest = async request => {
     const requestDetails = parseRequestDetails(request);
-    const reqDoc = new savedRequests(requestDetails);
-    return reqDoc.save(reqDoc);
+    return axiosInstance(`${processingApiUrl}/api/process`, {
+        method: 'POST',
+        data: {
+            request: requestDetails,
+            apikey: process.env.DWC_API_KEY
+        }
+    })
 };
 
 module.exports = {
