@@ -5,7 +5,7 @@ const processingApiUrl = process.env.PROCESSING_API_URL;
 const config = {
     gatewayUrl,
     mongoUrl,
-    processingApiUrl,
+    processingApiUrl
 };
 
 module.exports = config;

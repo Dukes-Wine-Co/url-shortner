@@ -1,6 +1,6 @@
 const { parseRequestDetails } = require('../../helpers/logger-methods');
 const { processingApiUrl } = require('../../config/app-config');
-const axiosInstance = require("../../config/axios-config");
+const axiosInstance = require('../../config/axios-config');
 
 const saveRequest = async request => {
     const requestDetails = parseRequestDetails(request);
@@ -10,7 +10,7 @@ const saveRequest = async request => {
             request: requestDetails,
             apikey: process.env.DWC_API_KEY
         }
-    })
+    });
 };
 
 module.exports = {
