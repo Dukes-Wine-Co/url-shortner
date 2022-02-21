@@ -1,5 +1,5 @@
 const nodeCache = require('../../helpers/storage-methods');
-const { logError, logInfo } = require('../../helpers/logger-methods');
+const { logError, logInfo, parseRequestDetails } = require('../../helpers/logger-methods');
 const { saveRequest } = require('./mongo-helpers');
 
 const REDIRECT_MAP = {
@@ -45,8 +45,22 @@ const setRedirectDestination = (destinationUrl, res, req) => {
     }
 };
 
+const urlIsPhishing = url => {
+    return url.includes('.');
+};
+
+const skipDbSave = req => {
+    const { originalPath } = parseRequestDetails(req);
+
+    return urlIsPhishing(originalPath);
+};
+
 const saveReqInDB = async req => {
     try {
+        if (skipDbSave(req)){
+            return;
+        }
+
         await saveRequest(req);
         logInfo('saveReqInDB(): req saved to db', req);
     } catch (e){
