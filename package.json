@@ -39,6 +39,7 @@
   "dependencies": {
     "axios": "^0.26.0",
     "body-parser": "^1.19.0",
+    "bottleneck": "^2.19.5",
     "dependency-cruiser": "^9.9.4",
     "express": "^4.17.1",
     "express-correlation-id": "^1.3.1",
