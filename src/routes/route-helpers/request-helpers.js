@@ -9,7 +9,8 @@ const REDIRECT_MAP = {
     'trends-1': 'https://issuu.com/trendspublishing/docs/trends_mayjune21_emag?fr=sYTFjMjMwNjIzMg',
     'catalog-fall-2021': 'https://static1.squarespace.com/static/5dde0017fbd78f1f18e94e3c/t/61902046f8750318f4aa8adc/1636835398996/2021_Fall_Catalog.pdf',
     'catalog-winter-2021': 'https://static1.squarespace.com/static/5dde0017fbd78f1f18e94e3c/t/61debbb036f857659c36ea03/1641986993344/2021_winter_wine_catalog.pdf',
-    'mahalome': 'https://mahalome.com/'
+    'mahalome': 'https://mahalome.com/',
+    'promo-mini-bottles-1': 'https://www.members.dukeswines.com/signup?isPromo=true&specialPromo=true&specialPromoTypes=sampleBottles&redirect=checkout'
 };
 
 const isSavedUrl = entryUrlPath => {
