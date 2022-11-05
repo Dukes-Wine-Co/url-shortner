@@ -1,10 +1,10 @@
-const express = require('express');
-const { gatewayUrl } = require('../config/app-config');
-const correlator = require('express-correlation-id');
-const { logRequest, logReqError } = require('../helpers/logger-methods');
-const { setRedirectDestination, mapRequest, saveReqInDB } = require('./route-helpers/request-helpers');
+import * as express from 'express';
+import { gatewayUrl } from '../config/app-config';
+import correlator from 'express-correlation-id';
+import { logReqError, logRequest } from '../helpers/logger-methods';
+import { mapRequest, saveReqInDB, setRedirectDestination } from './route-helpers/request-helpers';
 
-module.exports = app => {
+const server = app => {
     const router = express.Router();
 
     router.use(correlator());
@@ -25,3 +25,5 @@ module.exports = app => {
         await saveReqInDB(req);
     });
 };
+
+export default server;

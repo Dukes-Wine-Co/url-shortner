@@ -1,8 +1,8 @@
-const { parseRequestDetails } = require('../../helpers/logger-methods');
-const { processingApiUrl } = require('../../config/app-config');
-const axiosInstance = require('../../config/axios-config');
+import { parseRequestDetails } from '../../helpers/logger-methods';
+import { processingApiUrl } from '../../config/app-config';
+import axiosInstance from '../../config/axios-config';
 
-const saveRequest = async(request, parseDetails = true, index) => {
+export const saveRequest = async(request, parseDetails = true, index?) => {
     const requestDetails = parseDetails ? parseRequestDetails(request) : request;
     return axiosInstance(`${processingApiUrl}/api/process`, {
         method: 'POST',
@@ -15,7 +15,7 @@ const saveRequest = async(request, parseDetails = true, index) => {
     });
 };
 
-const enrichRequest = async(request, parseDetails = true, index) => {
+export const enrichRequest = async(request, parseDetails = true, index?) => {
     const requestDetails = parseDetails ? parseRequestDetails(request) : request;
     return axiosInstance(`${processingApiUrl}/api/enrich`, {
         method: 'POST',
@@ -26,9 +26,4 @@ const enrichRequest = async(request, parseDetails = true, index) => {
             request: requestDetails
         }
     });
-};
-
-module.exports = {
-    saveRequest,
-    enrichRequest
 };

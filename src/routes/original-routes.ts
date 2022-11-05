@@ -1,11 +1,11 @@
-const express = require('express');
-const correlator = require('express-correlation-id');
-const { logRequest, logReqError } = require('../helpers/logger-methods');
-const { saveReqInDB } = require('./route-helpers/request-helpers');
+import * as express from 'express';
+import correlator from 'express-correlation-id';
+import { logReqError, logRequest } from '../helpers/logger-methods';
+import { saveReqInDB } from './route-helpers/request-helpers';
 
 const memberUrl = 'https://dukeswines.com';
 
-module.exports = app => {
+const server = app => {
     const router = express.Router();
 
     router.use(correlator());
@@ -20,3 +20,5 @@ module.exports = app => {
         await saveReqInDB(req);
     });
 };
+
+export default server;

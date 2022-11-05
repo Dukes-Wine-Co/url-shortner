@@ -1,6 +1,6 @@
 const logger = require('../config/logger');
 
-const parseRequestDetails = req => {
+export const parseRequestDetails = req => {
     const statusCode = req.res?.statusCode || '';
     const originalPath = req.originalUrl || '';
     const referrer = req.headers.referer || '';
@@ -26,7 +26,7 @@ const parseRequestDetails = req => {
     };
 };
 
-const logError = (msg, req) => {
+export const logError = (msg, req?) => {
     const msgObj = { log: msg };
 
     if (req) {
@@ -36,7 +36,7 @@ const logError = (msg, req) => {
     }
 };
 
-const logInfo = (msg, req) => {
+export const logInfo = (msg, req?) => {
     const msgObj = { log: msg };
 
     if (req) {
@@ -46,20 +46,12 @@ const logInfo = (msg, req) => {
     }
 };
 
-const logRequest = (req, res, next) => {
+export const logRequest = (req, res, next) => {
     logger.http(parseRequestDetails(req));
     next();
 };
 
-const logReqError = (err, req, res, next) => {
+export const logReqError = (err, req, res, next) => {
     logger.error(parseRequestDetails(err));
     next();
-};
-
-module.exports = {
-    logError,
-    logInfo,
-    logReqError,
-    logRequest,
-    parseRequestDetails
 };

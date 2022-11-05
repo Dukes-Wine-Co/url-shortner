@@ -1,13 +1,11 @@
-const winston = require('winston');
+import * as winston from 'winston';
 
 const format = winston.format.combine(
     winston.format.json()
 );
 
-const logger = winston.createLogger({
+export default winston.createLogger({
     level: 'verbose',
     format,
     transports: new winston.transports.Console({})
 });
-
-module.exports = logger;

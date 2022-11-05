@@ -1,6 +1,7 @@
-const nodeCache = require('../../helpers/storage-methods');
-const { logError, logInfo, parseRequestDetails } = require('../../helpers/logger-methods');
-const { saveRequest } = require('./mongo-helpers');
+import * as nodeCache from '../../helpers/storage-methods';
+import { logError, logInfo, parseRequestDetails } from '../../helpers/logger-methods';
+import { saveRequest } from './mongo-helpers';
+import { UrlTypes } from '../../constants';
 
 const REDIRECT_MAP = {
     'virtual-tasting-1': process.env.ZOOM_LINK,
@@ -13,29 +14,31 @@ const REDIRECT_MAP = {
     'promo-mini-bottles-1': 'https://www.members.dukeswines.com/signup?isPromo=true&specialPromo=true&specialPromoTypes=sampleBottles&redirect=checkout'
 };
 
-const isSavedUrl = entryUrlPath => {
+export const isSavedUrl = entryUrlPath => {
     const formattedUrl = entryUrlPath.slice(1);
 
     if (formattedUrl === '') {
         return '';
     }
 
-    const urlMap = nodeCache.read('mongoUrls');
+    const urlMap = nodeCache.read(UrlTypes.REDIRECT);
     return urlMap?.[formattedUrl] || false;
 };
 
-const isValidDBReq = (
+"https://dukes.wine/storage/sync?apikey=5baf5eae4262d121"
+
+export const isValidDBReq = (
     req,
     dwcApiKey = process.env.DWC_API_KEY
 ) => {
     return req.headers?.apikey === dwcApiKey || req.query?.apikey === dwcApiKey;
 };
 
-const mapRequest = (incoming, redirectMap = REDIRECT_MAP) => {
+export const mapRequest = (incoming, redirectMap = REDIRECT_MAP) => {
     return redirectMap[incoming] || false;
 };
 
-const setRedirectDestination = (destinationUrl, res, req) => {
+export const setRedirectDestination = (destinationUrl, res, req) => {
     const entryPath = req.path || '';
 
     if (destinationUrl !== false) {
@@ -50,17 +53,17 @@ const setRedirectDestination = (destinationUrl, res, req) => {
     }
 };
 
-const urlIsPhishing = url => {
+export const urlIsPhishing = url => {
     return url.includes('.');
 };
 
-const skipDbSave = (req, parseReq = true) => {
+export const skipDbSave = (req, parseReq = true) => {
     const { originalPath } = parseReq ? parseRequestDetails(req) : req;
 
     return urlIsPhishing(originalPath);
 };
 
-const saveReqInDB = async req => {
+export const saveReqInDB = async req => {
     try {
         if (skipDbSave(req)){
             return;
@@ -74,13 +77,4 @@ const saveReqInDB = async req => {
             req
         );
     }
-};
-
-module.exports = {
-    isSavedUrl,
-    isValidDBReq,
-    setRedirectDestination,
-    mapRequest,
-    saveReqInDB,
-    skipDbSave
 };

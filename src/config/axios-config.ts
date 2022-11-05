@@ -1,4 +1,5 @@
-const axios = require('axios');
+import axios from 'axios';
+
 const commonConfig = {
     timeout: 30000,
     headers: {
@@ -9,7 +10,4 @@ const commonConfig = {
     }
 };
 
-const axiosInstance = axios.create(commonConfig);
-
-module.exports = axiosInstance;
-
+export default axios.create(commonConfig);

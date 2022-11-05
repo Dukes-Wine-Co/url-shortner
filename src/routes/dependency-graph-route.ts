@@ -1,27 +1,18 @@
-const express = require('express');
-const { cruise } = require('dependency-cruiser');
-const Viz = require('viz.js');
-const { Module, render } = require('viz.js/full.render.js');
+import * as express from 'express';
+import { cruise } from 'dependency-cruiser';
+import Viz from 'viz.js';
+import { Module, render } from 'viz.js/full.render.js';
 
 const viz = new Viz({ Module, render });
+
 const graphOptions = {
     includeOnly: '^(src)',
     exclude: '^(node_modules)',
     outputType: 'dot',
-    doNotFollow: {
-        dependencyTypes: [
-            'npm',
-            'npm-dev',
-            'npm-optional',
-            'npm-peer',
-            'npm-bundled',
-            'npm-no-pkg'
-        ]
-    },
     prefix: 'https://github.com/Dukes-Wine-Co/url-shortner/tree/master/'
 };
 
-module.exports = app => {
+const server = app => {
     const router = express.Router();
 
     app.use(/\/dependency[-]?graph/, router);
@@ -39,3 +30,5 @@ module.exports = app => {
             });
     });
 };
+
+export default server;
