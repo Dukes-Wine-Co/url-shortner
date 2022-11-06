@@ -1,14 +1,14 @@
 import { getAllPairs } from '../../helpers/db-transactions';
 import { mongoShortnedUrls } from '../../config/mongo-config';
 import { DSheets, ParsedSheetData, SheetRowData } from './sheets.types';
-import { processUrls } from '../../helpers/helper-methods';
+import { GenericObject, processUrls } from '../../helpers/helper-methods';
 import { getSheetData } from './sheets';
 import { UrlTypes } from '../../constants';
 import * as nodeCache from '../../helpers/storage-methods'
 
 export const getAllPairsInCache = () => {
-	const externalPairs = nodeCache.read(UrlTypes.EXTERNAL);
-	const redirectPairs = nodeCache.read(UrlTypes.REDIRECT);
+	const externalPairs = nodeCache.read(UrlTypes.EXTERNAL) as GenericObject;
+	const redirectPairs = nodeCache.read(UrlTypes.REDIRECT) as GenericObject;
 
 	return {
 		externalPairs,

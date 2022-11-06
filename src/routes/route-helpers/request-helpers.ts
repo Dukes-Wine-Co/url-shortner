@@ -2,8 +2,9 @@ import * as nodeCache from '../../helpers/storage-methods';
 import { logError, logInfo, parseRequestDetails } from '../../helpers/logger-methods';
 import { saveRequest } from './mongo-helpers';
 import { UrlTypes } from '../../constants';
+import { GenericObject } from '../../helpers/helper-methods';
 
-const REDIRECT_MAP = {
+const REDIRECT_MAP: GenericObject = {
     'virtual-tasting-1': process.env.ZOOM_LINK,
     'virtual-tasting': process.env.ZOOM_LINK,
     'juneteenth-2020': 'https://www.dukeswines.com/our-story',
@@ -25,8 +26,6 @@ export const isSavedUrl = entryUrlPath => {
     return urlMap?.[formattedUrl] || false;
 };
 
-"https://dukes.wine/storage/sync?apikey=5baf5eae4262d121"
-
 export const isValidDBReq = (
     req,
     dwcApiKey = process.env.DWC_API_KEY
@@ -34,14 +33,14 @@ export const isValidDBReq = (
     return req.headers?.apikey === dwcApiKey || req.query?.apikey === dwcApiKey;
 };
 
-export const mapRequest = (incoming, redirectMap = REDIRECT_MAP) => {
-    return redirectMap[incoming] || false;
+export const mapRequest = (incoming, redirectMap = REDIRECT_MAP): string => {
+    return redirectMap[incoming] || '';
 };
 
 export const setRedirectDestination = (destinationUrl, res, req) => {
     const entryPath = req.path || '';
 
-    if (destinationUrl !== false) {
+    if (destinationUrl !== '') {
         res.set('destination-url', destinationUrl);
     } else {
         logError({

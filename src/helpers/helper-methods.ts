@@ -1,6 +1,6 @@
 import { SheetRowData } from '../modules/sheets/sheets.types';
 
-interface GenericObject {
+export interface GenericObject {
     [k: string]: string
 }
 
