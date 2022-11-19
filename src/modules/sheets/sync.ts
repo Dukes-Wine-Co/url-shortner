@@ -21,7 +21,10 @@ const getAllPairsInDb = async (): Promise<SheetRowData[]> => {
 }
 
 const getAllSheetData = async (): Promise<ParsedSheetData> => {
-	const [redirectPairs, externalPairs] = await Promise.all([
+	const [
+		redirectPairs,
+		externalPairs
+	] = await Promise.all([
 		getSheetData({ sheetName: DSheets.REDIRECT }),
 		getSheetData({ sheetName: DSheets.EXTERNAL }),
 	])

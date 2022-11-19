@@ -1,6 +1,6 @@
 import * as express from 'express';
 import { gatewayUrl } from '../config/app-config';
-import correlator from 'express-correlation-id';
+import * as correlator from 'express-correlation-id';
 import { logReqError, logRequest } from '../helpers/logger-methods';
 import { mapRequest, saveReqInDB, setRedirectDestination } from './route-helpers/request-helpers';
 import * as nodeCache from '../helpers/storage-methods';

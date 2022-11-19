@@ -13,7 +13,6 @@ const getSheetsData = async () => {
 	const resp = await sheetAPI.spreadsheets.get({
 		spreadsheetId: SHEET_ID,
 		includeGridData: true,
-		ranges: ['A2:B', 'A2:B'],
 		auth,
 	});
 

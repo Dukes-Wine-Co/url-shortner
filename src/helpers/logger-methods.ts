@@ -1,4 +1,4 @@
-const logger = require('../config/logger');
+import logger from '../config/logger';
 
 export const parseRequestDetails = req => {
     const statusCode = req.res?.statusCode || '';

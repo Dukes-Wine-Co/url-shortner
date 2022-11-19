@@ -1,6 +1,6 @@
 import * as express from 'express';
 import { cruise } from 'dependency-cruiser';
-import Viz from 'viz.js';
+import * as Viz from 'viz.js';
 import { Module, render } from 'viz.js/full.render.js';
 
 const viz = new Viz({ Module, render });
