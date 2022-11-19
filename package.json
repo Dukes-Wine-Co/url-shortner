@@ -19,7 +19,7 @@
     "lint:fix": "eslint --fix 'src/**/*.ts' './src/**/*.ts'",
     "predev": "sh scripts/mongo.sh run; yarn run build",
     "setup": "sh tools/setup.sh",
-    "start": "NODE_ENV=production node src/index.ts",
+    "start": "NODE_ENV=production node dist/index.js",
     "test": "yarn run test:unit",
     "test:mutation": "stryker run",
     "test:unit": "NODE_ENV=test mocha --recursive --timeout 10000 'test/unit/**/*.spec.js'"
