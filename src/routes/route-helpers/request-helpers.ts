@@ -4,6 +4,11 @@ import { saveRequest } from './mongo-helpers';
 import { UrlTypes } from '../../constants';
 import { GenericObject } from '../../helpers/helper-methods';
 
+interface SavedUrlSchema {
+    redirectLocation: string;
+    hasRedirect: boolean;
+}
+
 const REDIRECT_MAP: GenericObject = {
     'virtual-tasting-1': process.env.ZOOM_LINK,
     'virtual-tasting': process.env.ZOOM_LINK,
@@ -15,15 +20,26 @@ const REDIRECT_MAP: GenericObject = {
     'promo-mini-bottles-1': 'https://www.members.dukeswines.com/signup?isPromo=true&specialPromo=true&specialPromoTypes=sampleBottles&redirect=checkout'
 };
 
-export const isSavedUrl = entryUrlPath => {
+export const isSavedUrl = (entryUrlPath: string): SavedUrlSchema => {
     const formattedUrl = entryUrlPath.slice(1);
 
     if (formattedUrl === '') {
-        return '';
+        return {
+            redirectLocation: '',
+            hasRedirect: false
+        }
     }
 
     const urlMap = nodeCache.read(UrlTypes.REDIRECT);
-    return urlMap?.[formattedUrl] || false;
+    const hasRedirect = urlMap?.[formattedUrl] !== ''
+
+    return hasRedirect ? {
+        redirectLocation: urlMap?.[formattedUrl],
+        hasRedirect: true
+    } : {
+        redirectLocation: '',
+        hasRedirect: false
+    }
 };
 
 export const isValidDBReq = (

@@ -5,6 +5,7 @@ import { GenericObject, processUrls } from '../../helpers/helper-methods';
 import { getSheetData } from './sheets';
 import { UrlTypes } from '../../constants';
 import * as nodeCache from '../../helpers/storage-methods'
+import { logInfo } from '../../helpers/logger-methods';
 
 export const getAllPairsInCache = () => {
 	const externalPairs = nodeCache.read(UrlTypes.EXTERNAL) as GenericObject;
@@ -38,6 +39,7 @@ const getAllSheetData = async (): Promise<ParsedSheetData> => {
 export const syncAllPairs = async (): Promise<void> => {
 	const sheetData = await getAllSheetData();
 	const urls = await getAllPairsInDb();
+	logInfo('The url pairs were successfully retrieved from the sync sheet');
 
 	nodeCache.write(UrlTypes.REDIRECT, processUrls([
 		...urls,

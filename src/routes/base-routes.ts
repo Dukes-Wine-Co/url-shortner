@@ -14,8 +14,8 @@ const server = app => {
     app.use('/', router);
 
     router.use('/', (req, res, next) => {
-        const destinationPath = isSavedUrl(req.path);
-        setRedirectDestination(destinationPath, res, req);
+        const destinationInfo = isSavedUrl(req.path);
+        setRedirectDestination(destinationInfo.redirectLocation, res, req);
         next();
     });
 

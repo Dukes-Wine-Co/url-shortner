@@ -8,7 +8,7 @@ void (async () => {
     logInfo('Starting process');
 
     try {
-        await syncAllPairs()
+        await syncAllPairs();
 
         logInfo('The urls were successfully written to the node cache');
     } catch (e){
